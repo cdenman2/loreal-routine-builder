@@ -1,64 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>L’Oréal Product-Aware Routine Builder</title>
-<link rel="stylesheet" href="./styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>L’Oréal Product-Aware Routine Builder</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 
 <body>
 <div class="page">
 
-<header class="header">
-  <div class="logo-wrap top-logo-wrap">
-    <img src="./images/loreal-logo.jpg" class="logo">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-wrap top-logo-wrap">
+      <img src="./images/loreal-logo.jpg" class="logo"/>
+    </div>
+
+    <div class="motto">"Because We’re Worth It"</div>
+
+    <h1 class="title">L’Oréal Product-Aware Routine Builder</h1>
+    <p class="subtitle">Build a personalized routine with product selection and AI-powered guidance</p>
+
+    <div class="fact-box">
+      Healthy skincare routines: cleanser → serum → moisturizer → SPF
+    </div>
+  </header>
+
+  <!-- PRODUCTS -->
+  <section class="controls-section">
+
+    <div class="toolbar">
+      <input id="search-input" placeholder="Search products..."/>
+      <select id="category-filter">
+        <option value="all">All Categories</option>
+        <option value="skincare">Skincare</option>
+        <option value="haircare">Haircare</option>
+        <option value="makeup">Makeup</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="products-top-actions">
+      <button id="load-products-btn">Load Live L’Oréal Products</button>
+      <button id="show-more-btn">Show More</button>
+    </div>
+
+    <div id="product-status">Click to load products</div>
+
+    <div id="product-grid" class="product-grid"></div>
+  </section>
+
+  <!-- SELECTED -->
+  <section class="selected-section">
+    <h2>Selected Products</h2>
+
+    <div id="selected-products-empty">No products selected yet.</div>
+    <div id="selected-products-list"></div>
+
+    <div class="selected-actions">
+      <button id="generate-routine-btn">Generate Routine</button>
+      <button id="clear-products-btn">Clear Selected Products</button>
+    </div>
+  </section>
+
+  <!-- CHAT -->
+  <section class="chat-container">
+    <div class="chat-box" id="chat-box">
+      <div class="message">
+        <div class="bubble">
+          Hello! Load products and ask me anything.
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input id="user-input" placeholder="Ask something..."/>
+      <button id="send-btn">Send</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="logo-wrap bottom-logo-wrap">
+    <img src="./images/loreal-logo.png" class="logo"/>
   </div>
 
-  <p class="motto">"Because We’re Worth It"</p>
-  <h1 class="title">L’Oréal Product-Aware Routine Builder</h1>
-  <p class="subtitle">Build a personalized routine with AI-powered guidance</p>
+  <footer class="footer">
+    © 2026 L’Oréal-inspired student project
+  </footer>
 
-  <div class="fact-box">
-    <p>Healthy skincare routines: cleanser → serum → moisturizer → SPF</p>
-  </div>
-</header>
+</div>
 
-<section class="controls-section">
-  <div class="toolbar">
-    <input id="search-input" placeholder="Search products...">
-    <select id="category-filter">
-      <option value="all">All Categories</option>
-      <option value="skincare">Skincare</option>
-      <option value="haircare">Haircare</option>
-      <option value="makeup">Makeup</option>
-      <option value="other">Other</option>
-    </select>
-  </div>
-
-  <div class="products-top-actions">
-    <button id="load-products-btn">Load Live L’Oréal Products</button>
-    <button id="show-more-btn">Show More</button>
-  </div>
-
-  <div id="product-status">Click to load products</div>
-  <div id="product-grid" class="product-grid"></div>
-</section>
-
-<section class="selected-section">
-  <h2>Selected Products</h2>
-  <div id="selected-products-list"></div>
-</section>
-
-<main class="chat-container">
-  <div id="chat-box"></div>
-
-  <div class="input-area">
-    <input id="user-input" placeholder="Ask something...">
-    <button id="send-btn">Send</button>
-  </div>
-</main>
-
-<script src="./script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
