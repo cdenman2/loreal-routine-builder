@@ -18,8 +18,11 @@ const workerUrl = "https://loreal-worker.loreal-chatbot-nick.workers.dev";
 
 let messages = [];
 let selectedProducts = JSON.parse(localStorage.getItem("lorealSelectedProducts")) || [];
-let showAllProducts = false;
 let products = [];
+let currentPage = 1;
+const limit = 8;
+let lastCategory = "all";
+let lastSearch = "";
 
 const lorealFacts = [
   "Healthy skincare routines usually follow this order: cleanser, treatment serum, moisturizer, and sunscreen during the day.",
@@ -81,9 +84,9 @@ function toggleProductSelection(product) {
   updateSelectedProductsUI();
 }
 
-function createProductCard(product, hiddenClass = "") {
+function createProductCard(product) {
   const card = document.createElement("div");
-  card.className = `product-card ${isSelected(product.id) ? "selected" : ""} ${hiddenClass}`.trim();
+  card.className = `product-card ${isSelected(product.id) ? "selected" : ""}`.trim();
 
   const safeDescription = product.description || "No description available.";
   const safeCategory = product.category || "other";
@@ -91,7 +94,7 @@ function createProductCard(product, hiddenClass = "") {
 
   card.innerHTML = `
     <div class="product-image-wrap">
-      <img src="${safeImage}" alt="${product.name}">
+      <img src="${safeImage}" alt="${product.name}" loading="lazy" decoding="async">
     </div>
     <div class="product-name">${product.name}</div>
     <div class="product-category">${capitalizeFirst(safeCategory)}</div>
@@ -125,6 +128,8 @@ function createProductCard(product, hiddenClass = "") {
 }
 
 function renderProducts() {
+  productGrid.innerHTML = "";
+
   const searchTerm = searchInput.value.trim().toLowerCase();
   const category = categoryFilter.value;
 
@@ -139,15 +144,11 @@ function renderProducts() {
     return matchesSearch && matchesCategory;
   });
 
-  productGrid.innerHTML = "";
-
-  filtered.forEach((product, index) => {
-    const hiddenClass = !showAllProducts && index >= 8 ? "hidden-card" : "";
-    productGrid.appendChild(createProductCard(product, hiddenClass));
+  filtered.forEach((product) => {
+    productGrid.appendChild(createProductCard(product));
   });
 
-  showMoreBtn.style.display = filtered.length > 8 ? "inline-block" : "none";
-  showMoreBtn.textContent = showAllProducts ? "Show Fewer Products" : "Show More Products";
+  showMoreBtn.style.display = "inline-block";
 }
 
 function capitalizeFirst(text) {
@@ -245,14 +246,28 @@ Please organize the routine clearly, explain the order of use, and mention what 
   await sendToWorker(prompt);
 }
 
-async function loadLiveProducts() {
+async function loadProductsPage(reset = false) {
+  if (reset) {
+    currentPage = 1;
+    products = [];
+    productGrid.innerHTML = "";
+  }
+
+  const category = categoryFilter.value;
+  const search = searchInput.value.trim();
+
+  if (reset) {
+    lastCategory = category;
+    lastSearch = search;
+  }
+
   productStatus.textContent = "Loading live L’Oréal products...";
-  productGrid.innerHTML = "";
 
   try {
-    const response = await fetch(`${workerUrl}/products`, {
-      method: "GET"
-    });
+    const response = await fetch(
+      `${workerUrl}/products?page=${currentPage}&limit=${limit}&category=${encodeURIComponent(category)}&search=${encodeURIComponent(search)}`,
+      { method: "GET" }
+    );
 
     const data = await response.json();
 
@@ -261,15 +276,29 @@ async function loadLiveProducts() {
       return;
     }
 
-    products = Array.isArray(data.products) ? data.products : [];
+    const newProducts = Array.isArray(data.products) ? data.products : [];
 
-    if (products.length === 0) {
-      productStatus.textContent = "No products were returned by the worker.";
+    if (reset && newProducts.length === 0) {
+      productStatus.textContent = "No products found.";
       return;
     }
 
+    if (newProducts.length === 0) {
+      productStatus.textContent = "No more products to load.";
+      showMoreBtn.style.display = "none";
+      return;
+    }
+
+    products = [...products, ...newProducts];
     productStatus.textContent = `Loaded ${products.length} live L’Oréal products.`;
     renderProducts();
+
+    if (newProducts.length < limit) {
+      showMoreBtn.style.display = "none";
+    } else {
+      showMoreBtn.style.display = "inline-block";
+      currentPage += 1;
+    }
   } catch (error) {
     productStatus.textContent = "Error loading products: " + error.message;
   }
@@ -283,8 +312,15 @@ userInput.addEventListener("keydown", (event) => {
   }
 });
 
-searchInput.addEventListener("input", renderProducts);
-categoryFilter.addEventListener("change", renderProducts);
+searchInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    loadProductsPage(true);
+  }
+});
+
+categoryFilter.addEventListener("change", () => {
+  loadProductsPage(true);
+});
 
 generateRoutineBtn.addEventListener("click", generateRoutine);
 
@@ -296,10 +332,11 @@ clearProductsBtn.addEventListener("click", () => {
 });
 
 showMoreBtn.addEventListener("click", () => {
-  showAllProducts = !showAllProducts;
-  renderProducts();
+  loadProductsPage(false);
 });
 
-loadProductsBtn.addEventListener("click", loadLiveProducts);
+loadProductsBtn.addEventListener("click", () => {
+  loadProductsPage(true);
+});
 
 updateSelectedProductsUI();
