@@ -1,0 +1,216 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* PAGE BACKGROUND */
+body {
+  background: url("./images/beach.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: black;
+  font-weight: bold;
+}
+
+/* MAIN WRAPPER */
+.page {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+}
+
+/* LOGO BOXES */
+.logo-wrap {
+  margin: 20px auto;
+  padding: 15px;
+  width: fit-content;
+  border: 6px solid black;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #ff3b3b, #a80000);
+}
+
+.top-logo {
+  width: 220px;
+}
+
+.bottom-logo {
+  width: 150px;
+}
+
+/* MOTTO */
+.motto {
+  margin-top: 10px;
+  padding: 10px;
+  display: inline-block;
+  border: 6px solid black;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f5d06f, #c79b2c);
+}
+
+/* TITLE */
+.title {
+  margin-top: 10px;
+}
+
+.subtitle {
+  margin-bottom: 10px;
+}
+
+/* FACT BOX */
+.fact-box {
+  margin: 15px auto;
+  padding: 15px;
+  width: 80%;
+  border: 6px solid red;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #f5d06f, #c79b2c);
+}
+
+/* PRODUCT GRID */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.product-card {
+  padding: 10px;
+  border: 4px solid black;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.product-card.selected {
+  border-color: red;
+  background: #ffe5e5;
+}
+
+/* SELECTED PRODUCTS */
+.selected-section {
+  margin-top: 20px;
+}
+
+.selected-products-list {
+  margin-top: 10px;
+}
+
+.selected-item {
+  padding: 8px;
+  margin: 5px;
+  display: inline-block;
+  border: 3px solid black;
+  border-radius: 8px;
+  background: white;
+}
+
+/* BUTTONS */
+.primary-btn,
+.secondary-btn {
+  margin: 10px;
+  padding: 10px 15px;
+  border: 4px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: linear-gradient(145deg, #ff3b3b, #a80000);
+  color: white;
+}
+
+.secondary-btn {
+  background: linear-gradient(145deg, #f5d06f, #c79b2c);
+}
+
+/* CHATBOX */
+.chat-container {
+  margin-top: 20px;
+  border: 6px solid black;
+  border-radius: 20px;
+  padding: 15px;
+  background: linear-gradient(145deg, #f5d06f, #c79b2c);
+}
+
+/* CHAT HEADER */
+.chat-header {
+  margin-bottom: 10px;
+}
+
+/* CHAT MESSAGES */
+.chat-box {
+  height: 300px;
+  overflow-y: auto;
+  border: 4px solid black;
+  border-radius: 15px;
+  padding: 10px;
+  background: linear-gradient(145deg, #fff, #ddd);
+}
+
+/* MESSAGE ROW */
+.message {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+/* LABELS */
+.label {
+  padding: 5px 10px;
+  border: 4px solid black;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.assistant-label {
+  background: linear-gradient(145deg, #f5d06f, #c79b2c);
+}
+
+.user .label {
+  background: linear-gradient(145deg, #ff3b3b, #a80000);
+  color: white;
+}
+
+/* BUBBLES */
+.bubble {
+  padding: 10px;
+  border: 4px solid black;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #dcdcdc);
+  max-width: 60%;
+}
+
+/* INPUT AREA */
+.input-area {
+  display: flex;
+  margin-top: 10px;
+}
+
+#user-input {
+  flex: 1;
+  padding: 10px;
+  border: 4px solid black;
+  border-radius: 10px;
+}
+
+#send-btn {
+  margin-left: 10px;
+  padding: 10px 15px;
+  border: 4px solid black;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f5d06f, #c79b2c);
+  cursor: pointer;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 20px;
+}
