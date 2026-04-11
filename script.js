@@ -1,61 +1,70 @@
-const API = "https://YOUR_WORKER_URL";
+const API = "https://YOUR-WORKER-URL.workers.dev";
 
-let allProducts = [];
+let products = [];
 let selected = [];
-let visibleCount = 8;
+let visible = 8;
 
 // LOAD PRODUCTS
 async function loadProducts() {
-  const category = document.getElementById("category").value;
+  try {
+    const category = document.getElementById("categoryDropdown").value;
 
-  const res = await fetch(`${API}/products?category=${category}`);
-  const data = await res.json();
+    const res = await fetch(`${API}/products?category=${category}`);
+    const data = await res.json();
 
-  allProducts = data;
-  visibleCount = 8;
+    if (!Array.isArray(data)) {
+      alert("Error loading products");
+      return;
+    }
 
-  render();
-}
+    products = data;
+    visible = 8;
 
-// SHOW MORE
-function showMore() {
-  visibleCount += 8;
-  render();
+    renderProducts();
+  } catch (e) {
+    console.error(e);
+    alert("Failed to load products");
+  }
 }
 
 // RENDER PRODUCTS
-function render() {
-  const grid = document.getElementById("products");
-  grid.innerHTML = "";
+function renderProducts() {
+  const container = document.getElementById("productContainer");
+  container.innerHTML = "";
 
-  const search = document.getElementById("search").value.toLowerCase();
+  const search = document.getElementById("searchInput").value.toLowerCase();
 
-  const filtered = allProducts.filter(p =>
+  const filtered = products.filter(p =>
     p.name.toLowerCase().includes(search)
   );
 
-  filtered.slice(0, visibleCount).forEach(p => {
-    const div = document.createElement("div");
-    div.className = "card";
+  filtered.slice(0, visible).forEach(p => {
+    const card = document.createElement("div");
+    card.className = "product-card";
 
-    div.innerHTML = `
-      <img src="${p.image}" />
-      <h4>${p.name}</h4>
+    card.innerHTML = `
+      <img src="${p.image}" onerror="this.src='fallback.png'"/>
+      <h3>${p.name}</h3>
       <p>${p.category}</p>
-      <button onclick='selectProduct(${JSON.stringify(p)})'>
-        ${selected.find(x => x.id === p.id) ? "Unselect" : "Select"}
+
+      <button onclick='toggleProduct(${JSON.stringify(p)})'>
+        ${selected.find(x => x.id === p.id) ? "Unselect Product" : "Select Product"}
+      </button>
+
+      <button onclick='showDescription("${p.description}")'>
+        Show Description
       </button>
     `;
 
-    grid.appendChild(div);
+    container.appendChild(card);
   });
 
-  document.getElementById("count").innerText =
-    `Loaded ${filtered.length} products`;
+  document.getElementById("productCount").innerText =
+    `Loaded ${filtered.length} live L'Oréal products.`;
 }
 
 // SELECT
-function selectProduct(p) {
+function toggleProduct(p) {
   const exists = selected.find(x => x.id === p.id);
 
   if (exists) {
@@ -65,15 +74,15 @@ function selectProduct(p) {
   }
 
   updateSelected();
-  render();
+  renderProducts();
 }
 
-// UPDATE SELECTED
+// SELECTED DISPLAY
 function updateSelected() {
-  const box = document.getElementById("selectedList");
+  const box = document.getElementById("selectedProducts");
 
   if (selected.length === 0) {
-    box.innerText = "None selected";
+    box.innerText = "No products selected yet.";
     return;
   }
 
@@ -84,11 +93,22 @@ function updateSelected() {
 function clearSelected() {
   selected = [];
   updateSelected();
-  render();
+  renderProducts();
+}
+
+// SHOW MORE
+function showMoreProducts() {
+  visible += 8;
+  renderProducts();
+}
+
+// DESCRIPTION
+function showDescription(desc) {
+  alert(desc);
 }
 
 // CHAT
-async function sendChat() {
+async function sendMessage() {
   const input = document.getElementById("chatInput");
   const msg = input.value;
 
@@ -102,14 +122,10 @@ async function sendChat() {
 
   const data = await res.json();
 
-  const chat = document.getElementById("chatBox");
-  chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
-  chat.innerHTML += `<p><b>Bot:</b> ${data.reply}</p>`;
+  const chat = document.getElementById("chatMessages");
+
+  chat.innerHTML += `<div class="user-msg">${msg}</div>`;
+  chat.innerHTML += `<div class="bot-msg">${data.reply}</div>`;
 
   input.value = "";
-}
-
-// ROUTINE
-function generateRoutine() {
-  alert("Routine generated based on selected products!");
 }
