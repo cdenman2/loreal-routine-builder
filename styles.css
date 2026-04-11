@@ -56,15 +56,15 @@ body {
 
 .page {
   width: 94%;
-  max-width: 1200px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 20px 0 50px;
+  padding: 14px 0 30px;
 }
 
 /* HEADER */
 .header {
   text-align: center;
-  margin-bottom: 22px;
+  margin-bottom: 14px;
 }
 
 .logo-wrap {
@@ -75,28 +75,28 @@ body {
 }
 
 .top-logo-wrap {
-  width: 320px;
-  height: 110px;
-  padding: 10px;
-  margin: 0 auto 14px;
+  width: 260px;
+  height: 88px;
+  padding: 8px;
+  margin: 0 auto 10px;
   background: var(--loreal-red);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 18px;
+  border-radius: 16px;
   box-shadow:
     inset 0 2px 4px rgba(255, 255, 255, 0.35),
     inset 0 -3px 6px rgba(0, 0, 0, 0.45);
 }
 
 .bottom-logo-wrap {
-  width: 180px;
-  height: 80px;
-  padding: 8px;
-  margin: 24px auto 0;
+  width: 150px;
+  height: 64px;
+  padding: 6px;
+  margin: 18px auto 0;
   background: var(--loreal-red);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 18px;
+  border-radius: 16px;
   box-shadow:
     inset 0 2px 4px rgba(255, 255, 255, 0.35),
     inset 0 -3px 6px rgba(0, 0, 0, 0.45);
@@ -111,14 +111,14 @@ body {
 
 .motto {
   display: inline-block;
-  margin-bottom: 12px;
-  padding: 10px 20px;
+  margin-bottom: 10px;
+  padding: 8px 16px;
   background: var(--loreal-gold);
   color: #000;
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--loreal-red) 1;
-  border-radius: 14px;
-  font-size: 1.2rem;
+  border-radius: 12px;
+  font-size: 1rem;
   font-style: italic;
   box-shadow:
     inset 0 2px 4px rgba(255, 255, 255, 0.5),
@@ -126,32 +126,32 @@ body {
 }
 
 .title {
-  font-size: 2.1rem;
-  margin-bottom: 6px;
+  font-size: 1.6rem;
+  margin-bottom: 4px;
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  margin-bottom: 14px;
+  font-size: 0.98rem;
+  margin-bottom: 10px;
 }
 
 .fact-box {
   width: 100%;
-  max-width: 900px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 14px 20px;
+  padding: 10px 16px;
   background: var(--loreal-gold);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--loreal-red) 1;
-  border-radius: 18px;
+  border-radius: 16px;
   box-shadow:
     inset 0 2px 4px rgba(255, 255, 255, 0.5),
     inset 0 -3px 6px rgba(0, 0, 0, 0.25);
 }
 
 #fact-text {
-  font-size: 1rem;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  line-height: 1.35;
   text-align: center;
 }
 
@@ -160,61 +160,64 @@ body {
 .selected-section {
   background: rgba(255, 255, 255, 0.84);
   backdrop-filter: blur(3px);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 20px;
-  padding: 20px;
-  margin-top: 22px;
+  border-radius: 18px;
+  padding: 14px;
+  margin-top: 16px;
 }
 
 .chat-container {
   background: var(--loreal-red);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 20px;
-  padding: 20px;
-  margin-top: 22px;
+  border-radius: 18px;
+  padding: 14px;
+  margin-top: 16px;
   box-shadow:
     inset 0 2px 4px rgba(255, 255, 255, 0.35),
     inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* TOOLBAR */
 .toolbar {
   display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
 .products-top-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 #search-input,
 #category-filter,
 #user-input {
-  min-height: 54px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  border: 6px solid transparent;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
   background: var(--loreal-white);
   color: #000;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 #search-input {
   flex: 1;
-  min-width: 250px;
+  min-width: 220px;
 }
 
 #category-filter {
-  width: 220px;
+  width: 190px;
 }
 
 #search-input::placeholder,
@@ -224,49 +227,49 @@ body {
 
 .status-text {
   text-align: center;
-  margin-bottom: 14px;
-  font-size: 0.98rem;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
 }
 
 /* PRODUCT GRID */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 14px;
   align-items: start;
 }
 
 .product-card {
   background: rgba(255, 255, 255, 0.96);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 18px;
-  padding: 14px;
+  border-radius: 16px;
+  padding: 12px;
   text-align: center;
   cursor: pointer;
   transition: transform 0.18s ease;
-  min-height: 360px;
+  min-height: 315px;
   display: flex;
   flex-direction: column;
 }
 
 .product-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .product-card.selected {
   background: #fff1bf;
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--loreal-red) 1;
 }
 
 .product-image-wrap {
   width: 100%;
-  height: 120px;
+  height: 96px;
   background: #fff;
-  border: 4px solid #000;
-  border-radius: 14px;
-  margin-bottom: 12px;
+  border: 3px solid #000;
+  border-radius: 12px;
+  margin-bottom: 10px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -282,24 +285,24 @@ body {
 }
 
 .product-name {
-  font-size: 1rem;
-  margin-bottom: 6px;
-  line-height: 1.2;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  line-height: 1.15;
 }
 
 .product-category {
-  font-size: 0.95rem;
-  margin-bottom: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
   color: #444;
 }
 
 .product-description {
   display: none;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 3px solid #000;
-  font-size: 0.88rem;
-  line-height: 1.35;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 2px solid #000;
+  font-size: 0.8rem;
+  line-height: 1.25;
 }
 
 .product-card.show-description .product-description {
@@ -310,21 +313,21 @@ body {
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-top: 12px;
+  gap: 6px;
+  padding-top: 10px;
 }
 
 /* BUTTONS */
 .primary-btn,
 .secondary-btn,
 #send-btn {
-  min-height: 50px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  border: 6px solid transparent;
+  min-height: 42px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.92rem;
   color: #000;
 }
 
@@ -339,58 +342,60 @@ body {
 }
 
 .selected-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
+  font-size: 1.45rem;
+  margin-bottom: 10px;
   text-align: center;
 }
 
 .empty-text {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
 }
 
 .selected-products-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .selected-item {
   background: var(--loreal-white);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
   border-radius: 999px;
-  padding: 10px 14px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
 }
 
 .selected-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 /* CHAT */
 .chat-header {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .chat-box {
-  min-height: 280px;
-  max-height: 430px;
+  min-height: 180px;
+  max-height: 260px;
   overflow-y: auto;
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: 12px;
+  margin-bottom: 12px;
   background: var(--loreal-gold);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 18px;
+  border-radius: 16px;
 }
 
 .message {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .user {
@@ -399,12 +404,13 @@ body {
 
 .label {
   display: inline-block;
-  margin-bottom: 8px;
-  padding: 8px 14px;
-  border-radius: 12px;
-  border: 6px solid transparent;
+  margin-bottom: 6px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
   color: #000;
+  font-size: 0.9rem;
 }
 
 .assistant-label {
@@ -418,25 +424,26 @@ body {
 
 .bubble {
   display: inline-block;
-  max-width: 78%;
-  padding: 14px 16px;
-  border-radius: 16px;
+  max-width: 72%;
+  padding: 10px 12px;
+  border-radius: 14px;
   background: var(--loreal-white);
-  border: 6px solid transparent;
+  border: 5px solid transparent;
   border-image: var(--metal-black) 1;
-  line-height: 1.45;
+  line-height: 1.35;
   text-align: left;
+  font-size: 0.92rem;
 }
 
 .input-area {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .footer {
   text-align: center;
-  margin-top: 12px;
-  font-size: 1rem;
+  margin-top: 10px;
+  font-size: 0.92rem;
 }
 
 .product-card.hidden-card {
@@ -445,23 +452,23 @@ body {
 
 @media (max-width: 900px) {
   .product-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   }
 }
 
 @media (max-width: 700px) {
   .page {
     width: 96%;
-    padding-top: 16px;
+    padding-top: 12px;
   }
 
   .top-logo-wrap {
-    width: 270px;
-    height: 95px;
+    width: 230px;
+    height: 82px;
   }
 
   .title {
-    font-size: 1.6rem;
+    font-size: 1.35rem;
   }
 
   .toolbar,
@@ -479,10 +486,14 @@ body {
   }
 
   .bubble {
-    max-width: 94%;
+    max-width: 92%;
   }
 
   .product-grid {
     grid-template-columns: 1fr;
+  }
+
+  .chat-container {
+    max-width: 100%;
   }
 }
