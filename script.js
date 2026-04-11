@@ -6,28 +6,18 @@ let visible = 8;
 
 // LOAD PRODUCTS
 async function loadProducts() {
-  try {
-    const category = document.getElementById("categoryDropdown").value;
+  const category = document.getElementById("categoryDropdown").value;
 
-    const res = await fetch(`${API}/products?category=${category}`);
-    const data = await res.json();
+  const res = await fetch(`${API}/products?category=${category}`);
+  const data = await res.json();
 
-    if (!Array.isArray(data)) {
-      alert("Error loading products");
-      return;
-    }
+  products = data;
+  visible = 8;
 
-    products = data;
-    visible = 8;
-
-    renderProducts();
-  } catch (e) {
-    console.error(e);
-    alert("Failed to load products");
-  }
+  renderProducts();
 }
 
-// RENDER PRODUCTS
+// RENDER
 function renderProducts() {
   const container = document.getElementById("productContainer");
   container.innerHTML = "";
@@ -39,28 +29,28 @@ function renderProducts() {
   );
 
   filtered.slice(0, visible).forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product-card";
+    const div = document.createElement("div");
+    div.className = "product-card";
 
-    card.innerHTML = `
-      <img src="${p.image}" onerror="this.src='fallback.png'"/>
-      <h3>${p.name}</h3>
+    div.innerHTML = `
+      <img src="${p.image}">
+      <h4>${p.name}</h4>
       <p>${p.category}</p>
 
       <button onclick='toggleProduct(${JSON.stringify(p)})'>
         ${selected.find(x => x.id === p.id) ? "Unselect Product" : "Select Product"}
       </button>
 
-      <button onclick='showDescription("${p.description}")'>
+      <button onclick='alert("${p.description}")'>
         Show Description
       </button>
     `;
 
-    container.appendChild(card);
+    container.appendChild(div);
   });
 
   document.getElementById("productCount").innerText =
-    `Loaded ${filtered.length} live L'Oréal products.`;
+    `Loaded ${filtered.length} products`;
 }
 
 // SELECT
@@ -77,7 +67,7 @@ function toggleProduct(p) {
   renderProducts();
 }
 
-// SELECTED DISPLAY
+// UPDATE SELECTED
 function updateSelected() {
   const box = document.getElementById("selectedProducts");
 
@@ -102,11 +92,6 @@ function showMoreProducts() {
   renderProducts();
 }
 
-// DESCRIPTION
-function showDescription(desc) {
-  alert(desc);
-}
-
 // CHAT
 async function sendMessage() {
   const input = document.getElementById("chatInput");
@@ -124,8 +109,13 @@ async function sendMessage() {
 
   const chat = document.getElementById("chatMessages");
 
-  chat.innerHTML += `<div class="user-msg">${msg}</div>`;
-  chat.innerHTML += `<div class="bot-msg">${data.reply}</div>`;
+  chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
+  chat.innerHTML += `<p><b>L'Oréal Advisor:</b> ${data.reply}</p>`;
 
   input.value = "";
+}
+
+// ROUTINE
+function generateRoutine() {
+  alert("Routine generated!");
 }
