@@ -5,8 +5,30 @@ body {
   text-align: center;
 }
 
+/* HEADER */
+.header {
+  margin-top: 20px;
+}
+
+.logo {
+  width: 200px;
+  border: 5px solid black;
+  border-radius: 10px;
+  background: linear-gradient(45deg, red, gold);
+}
+
+.tagline {
+  margin-top: 10px;
+  padding: 10px;
+  font-weight: bold;
+  border: 3px solid black;
+  border-radius: 10px;
+  background: linear-gradient(45deg, gold, yellow);
+}
+
+/* CONTROLS */
 .controls {
-  max-width: 800px;
+  max-width: 900px;
   margin: 20px auto;
   padding: 15px;
   border: 4px solid black;
@@ -14,46 +36,54 @@ body {
   background: rgba(255,255,255,0.9);
 }
 
-.controls input, .controls select {
+.controls input,
+.controls select {
   padding: 10px;
   margin: 5px;
+  width: 250px;
 }
 
-.buttons {
+/* BUTTONS */
+.button-row {
   margin-top: 10px;
 }
 
-.grid {
+button {
+  padding: 10px 15px;
+  font-weight: bold;
+  margin: 5px;
+  border-radius: 10px;
+  border: 2px solid black;
+  background: linear-gradient(45deg, gold, yellow);
+}
+
+/* PRODUCTS */
+.product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   max-width: 1000px;
   margin: auto;
   gap: 15px;
 }
 
-.card {
+.product-card {
   background: white;
   border: 3px solid black;
   border-radius: 12px;
   padding: 10px;
 }
 
-.card img {
+.product-card img {
   width: 100%;
-  height: 120px;
+  height: 140px;
   object-fit: contain;
-  background: linear-gradient(45deg, red, gold);
   border-radius: 10px;
+  background: linear-gradient(45deg, red, gold);
 }
 
-button {
-  margin: 5px;
-  padding: 10px;
-  font-weight: bold;
-}
-
-.selected {
-  max-width: 700px;
+/* SELECTED */
+.selected-box {
+  max-width: 800px;
   margin: 30px auto;
   padding: 15px;
   border: 4px solid black;
@@ -61,8 +91,9 @@ button {
   background: white;
 }
 
-.chat {
-  max-width: 700px;
+/* CHAT */
+.chatbox {
+  max-width: 800px;
   margin: 30px auto;
   padding: 15px;
   border: 4px solid black;
@@ -70,7 +101,7 @@ button {
   background: linear-gradient(45deg, red, gold);
 }
 
-#chatBox {
+#chatMessages {
   height: 200px;
   overflow-y: auto;
   background: white;
