@@ -11,97 +11,25 @@ const selectedProductsEmpty = document.getElementById("selected-products-empty")
 const generateRoutineBtn = document.getElementById("generate-routine-btn");
 const clearProductsBtn = document.getElementById("clear-products-btn");
 const showMoreBtn = document.getElementById("show-more-btn");
+const loadProductsBtn = document.getElementById("load-products-btn");
+const productStatus = document.getElementById("product-status");
 
 const workerUrl = "https://loreal-worker.loreal-chatbot-nick.workers.dev";
 
 let messages = [];
 let selectedProducts = JSON.parse(localStorage.getItem("lorealSelectedProducts")) || [];
 let showAllProducts = false;
+let products = [];
 
 const lorealFacts = [
-  "Healthy skincare routines usually follow this order: cleanser, treatment or serum, moisturizer, and sunscreen during the day.",
+  "Healthy skincare routines usually follow this order: cleanser, treatment serum, moisturizer, and sunscreen during the day.",
   "Daily sunscreen is one of the most important steps in protecting skin from premature aging caused by UV exposure.",
   "A moisturizer helps lock in hydration and supports the skin barrier after cleansing and treatment products.",
   "Serums are usually lightweight formulas designed to target specific concerns such as dryness, dullness, or fine lines.",
   "Haircare routines work best when matched to your needs, such as hydration for dry hair, repair for damaged hair, or volume for fine hair.",
   "Conditioner helps smooth the hair cuticle, improve softness, and reduce tangling after shampooing.",
   "Makeup usually applies more smoothly when skin is prepped first with hydration and a primer-friendly skincare routine.",
-  "Removing makeup before bed is one of the simplest habits that helps keep skin cleaner and more balanced.",
-  "A simple routine done consistently often works better than an overly complicated routine that is hard to maintain.",
-  "Heat styling can stress hair over time, so heat protectant products are often an important step before styling."
-];
-
-const products = [
-  {
-    id: "revitalift-cleanser",
-    name: "Revitalift Bright Reveal Cleanser",
-    category: "skincare",
-    description: "A daily cleanser that helps remove dirt, oil, and dull surface buildup for a fresher-looking complexion.",
-    image: "./images/product-cleanser.jpg"
-  },
-  {
-    id: "revitalift-serum",
-    name: "Revitalift Hyaluronic Acid Serum",
-    category: "skincare",
-    description: "A hydrating serum designed to help skin feel plumper and smoother with lightweight moisture support.",
-    image: "./images/product-serum.jpg"
-  },
-  {
-    id: "revitalift-moisturizer",
-    name: "Revitalift Triple Power Moisturizer",
-    category: "skincare",
-    description: "A moisturizer that helps support hydration while improving the feel of skin softness and comfort.",
-    image: "./images/product-moisturizer.jpg"
-  },
-  {
-    id: "bright-reveal-spf",
-    name: "Bright Reveal SPF Moisturizer",
-    category: "skincare",
-    description: "A daytime moisturizer with SPF support to help protect skin while keeping it hydrated.",
-    image: "./images/product-spf.jpg"
-  },
-  {
-    id: "elvive-shampoo",
-    name: "Elvive Hyaluron Plump Shampoo",
-    category: "haircare",
-    description: "A hydrating shampoo designed for dehydrated hair that needs softness and bounce.",
-    image: "./images/product-shampoo.jpg"
-  },
-  {
-    id: "elvive-conditioner",
-    name: "Elvive Hyaluron Plump Conditioner",
-    category: "haircare",
-    description: "A conditioner that helps smooth and moisturize hair after cleansing.",
-    image: "./images/product-conditioner.jpg"
-  },
-  {
-    id: "elvive-serum",
-    name: "Elvive Wonder Water Serum",
-    category: "haircare",
-    description: "A lightweight hair treatment that helps improve softness, shine, and manageability.",
-    image: "./images/product-hair-serum.jpg"
-  },
-  {
-    id: "infallible-foundation",
-    name: "Infallible Fresh Wear Foundation",
-    category: "makeup",
-    description: "A long-wear foundation designed for breathable coverage and a smoother complexion look.",
-    image: "./images/product-foundation.jpg"
-  },
-  {
-    id: "telescopic-mascara",
-    name: "Telescopic Mascara",
-    category: "makeup",
-    description: "A mascara designed to help lashes look longer and more defined.",
-    image: "./images/product-mascara.jpg"
-  },
-  {
-    id: "lip-oil",
-    name: "Glow Paradise Lip Oil",
-    category: "makeup",
-    description: "A glossy lip product that helps lips look smoother and more hydrated.",
-    image: "./images/product-lip.jpg"
-  }
+  "Removing makeup before bed is one of the simplest habits that helps keep skin cleaner and more balanced."
 ];
 
 let factIndex = 0;
@@ -157,15 +85,17 @@ function createProductCard(product, hiddenClass = "") {
   const card = document.createElement("div");
   card.className = `product-card ${isSelected(product.id) ? "selected" : ""} ${hiddenClass}`.trim();
 
-  const imageSrc = product.image || "./images/loreal-logo.jpg";
+  const safeDescription = product.description || "No description available.";
+  const safeCategory = product.category || "other";
+  const safeImage = product.image || "./images/loreal-logo.jpg";
 
   card.innerHTML = `
     <div class="product-image-wrap">
-      <img src="${imageSrc}" alt="${product.name}">
+      <img src="${safeImage}" alt="${product.name}">
     </div>
     <div class="product-name">${product.name}</div>
-    <div class="product-category">${capitalizeFirst(product.category)}</div>
-    <div class="product-description">${product.description}</div>
+    <div class="product-category">${capitalizeFirst(safeCategory)}</div>
+    <div class="product-description">${safeDescription}</div>
     <div class="product-actions">
       <button class="secondary-btn select-btn" type="button">
         ${isSelected(product.id) ? "Unselect Product" : "Select Product"}
@@ -200,11 +130,11 @@ function renderProducts() {
 
   const filtered = products.filter((product) => {
     const matchesSearch =
-      product.name.toLowerCase().includes(searchTerm) ||
-      product.description.toLowerCase().includes(searchTerm) ||
-      product.category.toLowerCase().includes(searchTerm);
+      (product.name || "").toLowerCase().includes(searchTerm) ||
+      (product.description || "").toLowerCase().includes(searchTerm) ||
+      (product.category || "").toLowerCase().includes(searchTerm);
 
-    const matchesCategory = category === "all" || product.category === category;
+    const matchesCategory = category === "all" || (product.category || "other") === category;
 
     return matchesSearch && matchesCategory;
   });
@@ -212,11 +142,11 @@ function renderProducts() {
   productGrid.innerHTML = "";
 
   filtered.forEach((product, index) => {
-    const hiddenClass = !showAllProducts && index >= 6 ? "hidden-card" : "";
+    const hiddenClass = !showAllProducts && index >= 8 ? "hidden-card" : "";
     productGrid.appendChild(createProductCard(product, hiddenClass));
   });
 
-  showMoreBtn.style.display = filtered.length > 6 ? "inline-block" : "none";
+  showMoreBtn.style.display = filtered.length > 8 ? "inline-block" : "none";
   showMoreBtn.textContent = showAllProducts ? "Show Fewer Products" : "Show More Products";
 }
 
@@ -303,7 +233,7 @@ async function generateRoutine() {
   }
 
   const productSummary = selectedProducts
-    .map((product) => `- ${product.name} (${product.category}): ${product.description}`)
+    .map((product) => `- ${product.name} (${product.category || "other"}): ${product.description || "No description available."}`)
     .join("\n");
 
   const prompt = `Create a personalized beauty routine using these selected L’Oréal products:
@@ -313,6 +243,36 @@ ${productSummary}
 Please organize the routine clearly, explain the order of use, and mention what each product contributes to the routine.`;
 
   await sendToWorker(prompt);
+}
+
+async function loadLiveProducts() {
+  productStatus.textContent = "Loading live L’Oréal products...";
+  productGrid.innerHTML = "";
+
+  try {
+    const response = await fetch(`${workerUrl}/products`, {
+      method: "GET"
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      productStatus.textContent = "Error loading products: " + (data.error || "Request failed.");
+      return;
+    }
+
+    products = Array.isArray(data.products) ? data.products : [];
+
+    if (products.length === 0) {
+      productStatus.textContent = "No products were returned by the worker.";
+      return;
+    }
+
+    productStatus.textContent = `Loaded ${products.length} live L’Oréal products.`;
+    renderProducts();
+  } catch (error) {
+    productStatus.textContent = "Error loading products: " + error.message;
+  }
 }
 
 sendBtn.addEventListener("click", () => sendToWorker());
@@ -340,5 +300,6 @@ showMoreBtn.addEventListener("click", () => {
   renderProducts();
 });
 
-renderProducts();
+loadProductsBtn.addEventListener("click", loadLiveProducts);
+
 updateSelectedProductsUI();
