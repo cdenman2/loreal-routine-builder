@@ -1,121 +1,75 @@
-const API = "https://YOUR-WORKER-URL.workers.dev";
+const API = "https://loreal-worker.loreal-chatbot-nick.workers.dev";
+
+const productGrid = document.getElementById("productGrid");
+const loadBtn = document.getElementById("loadProductsBtn");
+const moreBtn = document.getElementById("loadMoreBtn");
+const searchInput = document.getElementById("searchInput");
+const categorySelect = document.getElementById("categorySelect");
+const statusText = document.getElementById("statusText");
 
 let products = [];
-let selected = [];
-let visible = 8;
+let displayed = 0;
+const PAGE_SIZE = 8;
 
-// LOAD PRODUCTS
-async function loadProducts() {
-  const category = document.getElementById("categoryDropdown").value;
+loadBtn.onclick = async () => {
+  statusText.textContent = "Loading products...";
+  try {
+    const res = await fetch(API + "/products");
+    const data = await res.json();
+    products = data.products;
+    displayed = 0;
+    productGrid.innerHTML = "";
+    renderMore();
+    statusText.textContent = `Loaded ${products.length} products`;
+  } catch (err) {
+    statusText.textContent = "Error loading products";
+  }
+};
 
-  const res = await fetch(`${API}/products?category=${category}`);
-  const data = await res.json();
+moreBtn.onclick = renderMore;
 
-  products = data;
-  visible = 8;
+function renderMore() {
+  const filtered = filterProducts();
 
-  renderProducts();
-}
+  const slice = filtered.slice(displayed, displayed + PAGE_SIZE);
+  slice.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "product-card";
 
-// RENDER
-function renderProducts() {
-  const container = document.getElementById("productContainer");
-  container.innerHTML = "";
-
-  const search = document.getElementById("searchInput").value.toLowerCase();
-
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(search)
-  );
-
-  filtered.slice(0, visible).forEach(p => {
-    const div = document.createElement("div");
-    div.className = "product-card";
-
-    div.innerHTML = `
-      <img src="${p.image}">
-      <h4>${p.name}</h4>
+    card.innerHTML = `
+      <div class="img-wrap">
+        <img src="${p.image}" alt="${p.name}" loading="lazy">
+      </div>
+      <h3>${p.name}</h3>
       <p>${p.category}</p>
-
-      <button onclick='toggleProduct(${JSON.stringify(p)})'>
-        ${selected.find(x => x.id === p.id) ? "Unselect Product" : "Select Product"}
-      </button>
-
-      <button onclick='alert("${p.description}")'>
-        Show Description
-      </button>
+      <button>Select Product</button>
     `;
 
-    container.appendChild(div);
+    productGrid.appendChild(card);
   });
 
-  document.getElementById("productCount").innerText =
-    `Loaded ${filtered.length} products`;
+  displayed += PAGE_SIZE;
 }
 
-// SELECT
-function toggleProduct(p) {
-  const exists = selected.find(x => x.id === p.id);
+function filterProducts() {
+  const search = searchInput.value.toLowerCase();
+  const category = categorySelect.value;
 
-  if (exists) {
-    selected = selected.filter(x => x.id !== p.id);
-  } else {
-    selected.push(p);
-  }
-
-  updateSelected();
-  renderProducts();
-}
-
-// UPDATE SELECTED
-function updateSelected() {
-  const box = document.getElementById("selectedProducts");
-
-  if (selected.length === 0) {
-    box.innerText = "No products selected yet.";
-    return;
-  }
-
-  box.innerText = selected.map(p => p.name).join(", ");
-}
-
-// CLEAR
-function clearSelected() {
-  selected = [];
-  updateSelected();
-  renderProducts();
-}
-
-// SHOW MORE
-function showMoreProducts() {
-  visible += 8;
-  renderProducts();
-}
-
-// CHAT
-async function sendMessage() {
-  const input = document.getElementById("chatInput");
-  const msg = input.value;
-
-  const res = await fetch(`${API}/chat`, {
-    method: "POST",
-    body: JSON.stringify({
-      message: msg,
-      history: []
-    })
+  return products.filter(p => {
+    const matchesSearch = p.name.toLowerCase().includes(search);
+    const matchesCategory = category === "all" || p.category === category;
+    return matchesSearch && matchesCategory;
   });
-
-  const data = await res.json();
-
-  const chat = document.getElementById("chatMessages");
-
-  chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
-  chat.innerHTML += `<p><b>L'Oréal Advisor:</b> ${data.reply}</p>`;
-
-  input.value = "";
 }
 
-// ROUTINE
-function generateRoutine() {
-  alert("Routine generated!");
-}
+searchInput.oninput = () => {
+  productGrid.innerHTML = "";
+  displayed = 0;
+  renderMore();
+};
+
+categorySelect.onchange = () => {
+  productGrid.innerHTML = "";
+  displayed = 0;
+  renderMore();
+};
