@@ -7,13 +7,19 @@
 </head>
 <body>
 
+  <!-- HEADER -->
+  <div class="header">
+    <img src="https://1000logos.net/wp-content/uploads/2017/05/Loreal-logo.png" class="logo">
+    <div class="tagline">"Because You're Worth It"</div>
+  </div>
+
   <h1>L’Oréal Product-Aware Routine Builder</h1>
 
   <!-- CONTROLS -->
   <div class="controls">
-    <input id="search" placeholder="Search products..." />
-    
-    <select id="category">
+    <input id="searchInput" placeholder="Search products...">
+
+    <select id="categoryDropdown">
       <option value="all">All Categories</option>
       <option value="skincare">Skincare</option>
       <option value="haircare">Haircare</option>
@@ -21,32 +27,32 @@
       <option value="other">Other</option>
     </select>
 
-    <div class="buttons">
-      <button onclick="loadProducts()">Load Products</button>
-      <button onclick="showMore()">Show More</button>
+    <div class="button-row">
+      <button onclick="loadProducts()">Load Live L'Oréal Products</button>
+      <button onclick="showMoreProducts()">Show More Products</button>
     </div>
 
-    <div id="count"></div>
+    <div id="productCount"></div>
   </div>
 
   <!-- PRODUCTS -->
-  <div id="products" class="grid"></div>
+  <div id="productContainer" class="product-grid"></div>
 
   <!-- SELECTED -->
-  <div class="selected">
+  <div class="selected-box">
     <h2>Selected Products</h2>
-    <div id="selectedList">None selected</div>
+    <div id="selectedProducts">No products selected yet.</div>
 
     <button onclick="generateRoutine()">Generate Routine</button>
-    <button onclick="clearSelected()">Clear</button>
+    <button onclick="clearSelected()">Clear Selected Products</button>
   </div>
 
   <!-- CHAT -->
-  <div class="chat">
-    <div id="chatBox"></div>
+  <div class="chatbox">
+    <div id="chatMessages"></div>
 
-    <input id="chatInput" placeholder="Ask about your routine..." />
-    <button onclick="sendChat()">Send</button>
+    <input id="chatInput" placeholder="Ask about your routine...">
+    <button onclick="sendMessage()">Send</button>
   </div>
 
 <script src="script.js"></script>
