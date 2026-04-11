@@ -56,12 +56,11 @@ body {
 
 .page {
   width: 94%;
-  max-width: 1180px;
+  max-width: 1160px;
   margin: 0 auto;
-  padding: 14px 0 30px;
+  padding: 16px 0 28px;
 }
 
-/* HEADER */
 .header {
   text-align: center;
   margin-bottom: 14px;
@@ -80,26 +79,26 @@ body {
   padding: 8px;
   margin: 0 auto 10px;
   background: var(--loreal-red);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 16px;
+  border-radius: 14px;
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.45);
 }
 
 .bottom-logo-wrap {
   width: 150px;
   height: 64px;
   padding: 6px;
-  margin: 18px auto 0;
+  margin: 16px auto 0;
   background: var(--loreal-red);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 16px;
+  border-radius: 14px;
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.45);
 }
 
 .logo {
@@ -115,14 +114,11 @@ body {
   padding: 8px 16px;
   background: var(--loreal-gold);
   color: #000;
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--loreal-red) 1;
   border-radius: 12px;
   font-size: 1rem;
   font-style: italic;
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.5),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .title {
@@ -137,56 +133,66 @@ body {
 
 .fact-box {
   width: 100%;
-  max-width: 880px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 10px 16px;
+  padding: 10px 14px;
   background: var(--loreal-gold);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--loreal-red) 1;
-  border-radius: 16px;
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.5),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
 }
 
 #fact-text {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.35;
   text-align: center;
 }
 
-/* PANELS */
+/* SECTIONS */
 .controls-section,
 .selected-section {
-  background: rgba(255, 255, 255, 0.84);
+  background: rgba(255,255,255,0.84);
   backdrop-filter: blur(3px);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 18px;
-  padding: 14px;
-  margin-top: 16px;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 14px;
+}
+
+.controls-section {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.selected-section {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 12px;
 }
 
 .chat-container {
   background: var(--loreal-red);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 18px;
-  padding: 14px;
-  margin-top: 16px;
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
-  max-width: 980px;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 14px;
+  max-width: 860px;
   margin-left: auto;
   margin-right: auto;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.45);
 }
 
 /* TOOLBAR */
 .toolbar {
   display: flex;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
@@ -195,20 +201,20 @@ body {
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 #search-input,
 #category-filter,
 #user-input {
-  min-height: 44px;
+  min-height: 42px;
   padding: 8px 12px;
-  border-radius: 12px;
-  border: 5px solid transparent;
+  border-radius: 10px;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
   background: var(--loreal-white);
   color: #000;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
 }
 
 #search-input {
@@ -217,7 +223,7 @@ body {
 }
 
 #category-filter {
-  width: 190px;
+  width: 180px;
 }
 
 #search-input::placeholder,
@@ -227,28 +233,28 @@ body {
 
 .status-text {
   text-align: center;
-  margin-bottom: 10px;
-  font-size: 0.9rem;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
 }
 
 /* PRODUCT GRID */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
-  gap: 14px;
+  gap: 12px;
   align-items: start;
 }
 
 .product-card {
-  background: rgba(255, 255, 255, 0.96);
-  border: 5px solid transparent;
+  background: rgba(255,255,255,0.96);
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 16px;
-  padding: 12px;
+  border-radius: 12px;
+  padding: 10px;
   text-align: center;
   cursor: pointer;
   transition: transform 0.18s ease;
-  min-height: 315px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
 }
@@ -259,17 +265,17 @@ body {
 
 .product-card.selected {
   background: #fff1bf;
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--loreal-red) 1;
 }
 
 .product-image-wrap {
   width: 100%;
-  height: 96px;
+  height: 92px;
   background: #fff;
   border: 3px solid #000;
-  border-radius: 12px;
-  margin-bottom: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -285,13 +291,13 @@ body {
 }
 
 .product-name {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   margin-bottom: 4px;
   line-height: 1.15;
 }
 
 .product-category {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   margin-bottom: 6px;
   color: #444;
 }
@@ -301,7 +307,7 @@ body {
   margin-top: 6px;
   padding-top: 6px;
   border-top: 2px solid #000;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   line-height: 1.25;
 }
 
@@ -314,20 +320,20 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 /* BUTTONS */
 .primary-btn,
 .secondary-btn,
 #send-btn {
-  min-height: 42px;
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 5px solid transparent;
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
   cursor: pointer;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: #000;
 }
 
@@ -341,16 +347,17 @@ body {
   background: var(--loreal-gold);
 }
 
+/* SELECTED */
 .selected-section h2 {
-  font-size: 1.45rem;
-  margin-bottom: 10px;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
   text-align: center;
 }
 
 .empty-text {
   text-align: center;
-  margin-bottom: 10px;
-  font-size: 0.95rem;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
 }
 
 .selected-products-list {
@@ -358,16 +365,16 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .selected-item {
   background: var(--loreal-white);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 999px;
-  padding: 8px 12px;
-  font-size: 0.9rem;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
 }
 
 .selected-actions {
@@ -379,23 +386,23 @@ body {
 
 /* CHAT */
 .chat-header {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .chat-box {
-  min-height: 180px;
-  max-height: 260px;
+  min-height: 130px;
+  max-height: 190px;
   overflow-y: auto;
-  padding: 12px;
-  margin-bottom: 12px;
+  padding: 10px;
+  margin-bottom: 8px;
   background: var(--loreal-gold);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  border-radius: 16px;
+  border-radius: 12px;
 }
 
 .message {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .user {
@@ -405,12 +412,12 @@ body {
 .label {
   display: inline-block;
   margin-bottom: 6px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 10px;
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
   color: #000;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
 }
 
 .assistant-label {
@@ -425,25 +432,35 @@ body {
 .bubble {
   display: inline-block;
   max-width: 72%;
-  padding: 10px 12px;
-  border-radius: 14px;
+  padding: 8px 10px;
+  border-radius: 10px;
   background: var(--loreal-white);
-  border: 5px solid transparent;
+  border: 4px solid transparent;
   border-image: var(--metal-black) 1;
-  line-height: 1.35;
+  line-height: 1.3;
   text-align: left;
-  font-size: 0.92rem;
+  font-size: 0.84rem;
 }
 
 .input-area {
   display: flex;
-  gap: 10px;
+  gap: 8px;
+}
+
+#user-input {
+  min-height: 36px;
+  font-size: 0.84rem;
+}
+
+#send-btn {
+  min-height: 36px;
+  font-size: 0.82rem;
 }
 
 .footer {
   text-align: center;
   margin-top: 10px;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 .product-card.hidden-card {
@@ -493,7 +510,8 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .chat-container {
+  .chat-container,
+  .selected-section {
     max-width: 100%;
   }
 }
