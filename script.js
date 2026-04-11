@@ -1,15 +1,10 @@
 const API = "https://loreal-worker.loreal-chatbot-nick.workers.dev";
 
-const loadBtn = document.getElementById("load-products-btn");
 const grid = document.getElementById("product-grid");
-const status = document.getElementById("product-status");
+const statusText = document.getElementById("product-status");
 
-const sendBtn = document.getElementById("send-btn");
-const input = document.getElementById("user-input");
-const chatBox = document.getElementById("chat-box");
-
-loadBtn.onclick = async () => {
-  status.textContent = "Loading products...";
+document.getElementById("load-products-btn").onclick = async () => {
+  statusText.innerText = "Loading...";
 
   try {
     const res = await fetch(API + "/products");
@@ -22,42 +17,39 @@ loadBtn.onclick = async () => {
       card.className = "product-card";
 
       card.innerHTML = `
-        <div class="product-image-wrap">
-          <img src="${p.image}">
-        </div>
+        <img src="${p.image}" style="width:100%;height:100px;object-fit:contain;">
         <div>${p.name}</div>
-        <div>${p.category}</div>
+        <button>Select</button>
       `;
 
       grid.appendChild(card);
     });
 
-    status.textContent = "Loaded " + data.products.length + " products";
-  } catch (e) {
-    status.textContent = "FAILED TO LOAD PRODUCTS";
+    statusText.innerText = "Loaded products";
+  } catch {
+    statusText.innerText = "FAILED TO LOAD PRODUCTS";
   }
 };
 
-sendBtn.onclick = async () => {
-  const msg = input.value.trim();
-  if (!msg) return;
+/* CHAT */
+document.getElementById("send-btn").onclick = async () => {
+  const input = document.getElementById("user-input");
+  const msg = input.value;
 
-  chatBox.innerHTML += `<div><b>You:</b> ${msg}</div>`;
+  if(!msg) return;
+
+  const chat = document.getElementById("chat-box");
+
+  chat.innerHTML += `<div class="message"><div class="bubble">You: ${msg}</div></div>`;
+
+  const res = await fetch(API + "/chat", {
+    method:"POST",
+    body: JSON.stringify({message: msg})
+  });
+
+  const data = await res.json();
+
+  chat.innerHTML += `<div class="message"><div class="bubble">${data.reply}</div></div>`;
+
   input.value = "";
-
-  try {
-    const res = await fetch(API + "/chat", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ message: msg })
-    });
-
-    const data = await res.json();
-
-    chatBox.innerHTML += `<div><b>AI:</b> ${data.reply}</div>`;
-  } catch {
-    chatBox.innerHTML += `<div><b>AI:</b> ERROR</div>`;
-  }
-
-  chatBox.scrollTop = chatBox.scrollHeight;
 };
