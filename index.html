@@ -19,7 +19,7 @@
 
       <div class="fact-box">
         <p id="fact-text">
-          Healthy skincare routines usually follow this order: cleanser, treatment or serum, moisturizer, and sunscreen during the day.
+          Healthy skincare routines usually follow this order: cleanser, treatment serum, moisturizer, and sunscreen during the day.
         </p>
       </div>
     </header>
@@ -38,19 +38,22 @@
           <option value="skincare">Skincare</option>
           <option value="haircare">Haircare</option>
           <option value="makeup">Makeup</option>
+          <option value="other">Other</option>
         </select>
       </div>
 
-      <div id="product-grid" class="product-grid"></div>
+      <div class="products-top-actions">
+        <button id="load-products-btn" class="secondary-btn" type="button">Load Live L’Oréal Products</button>
+        <button id="show-more-btn" class="secondary-btn" type="button">Show More Products</button>
+      </div>
 
-      <button id="show-more-btn" class="secondary-btn" type="button">Show More Products</button>
+      <div id="product-status" class="status-text">Click “Load Live L’Oréal Products” to fetch products.</div>
+      <div id="product-grid" class="product-grid"></div>
     </section>
 
     <section class="selected-section">
       <h2>Selected Products</h2>
-      <div id="selected-products-empty" class="empty-text">
-        No products selected yet.
-      </div>
+      <div id="selected-products-empty" class="empty-text">No products selected yet.</div>
       <div id="selected-products-list" class="selected-products-list"></div>
 
       <div class="selected-actions">
@@ -68,7 +71,7 @@
         <div class="message assistant">
           <div class="label assistant-label">L’Oréal Advisor</div>
           <div class="bubble">
-            Hello! Select products, generate a routine, and ask follow-up questions about your routine, skincare, haircare, or beauty products.
+            Hello! Load products, select products, generate a routine, and ask follow-up questions about your routine, skincare, haircare, or beauty products.
           </div>
         </div>
       </div>
