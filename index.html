@@ -1,60 +1,129 @@
+Skip to content
+cdenman2
+loreal-routine-builder
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security and quality
+Insights
+Settings
+loreal-routine-builder
+/index.html
+Go to file
+t
+cdenman2
+cdenman2
+Update index.html
+4b272cc
+ · 
+6 hours ago
+
+Code
+
+Blame
+101 lines (87 loc) · 3.66 KB
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>L'Oréal Routine Builder</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L’Oréal Product-Aware Routine Builder</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <div class="page">
+    <header class="header">
+      <div class="logo-wrap top-logo-wrap">
+        <img src="./images/loreal-logo.jpg" alt="L’Oréal Logo" class="logo top-logo" />
+      </div>
 
-  <!-- HEADER -->
-  <div class="header">
-    <img src="https://1000logos.net/wp-content/uploads/2017/05/Loreal-logo.png" class="logo">
-    <div class="tagline">"Because You're Worth It"</div>
-  </div>
+      <p class="motto">"Because We’re Worth It"</p>
+      <h1 class="title">L’Oréal Product-Aware Routine Builder</h1>
+      <p class="subtitle">Build a personalized routine with product selection and AI-powered guidance</p>
 
-  <h1>L’Oréal Product-Aware Routine Builder</h1>
+      <div class="fact-box">
+        <p id="fact-text">
+          Healthy skincare routines usually follow this order: cleanser, treatment serum, moisturizer, and sunscreen during the day.
+        </p>
+      </div>
+    </header>
 
-  <!-- CONTROLS -->
-  <div class="controls">
-    <input id="searchInput" placeholder="Search products...">
+    <section class="controls-section">
+      <div class="toolbar">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search products..."
+          aria-label="Search products"
+        />
 
-    <select id="categoryDropdown">
-      <option value="all">All Categories</option>
-      <option value="skincare">Skincare</option>
-      <option value="haircare">Haircare</option>
-      <option value="makeup">Makeup</option>
-      <option value="other">Other</option>
-    </select>
+        <select id="category-filter" aria-label="Filter by category">
+          <option value="all">All Categories</option>
+          <option value="skincare">Skincare</option>
+          <option value="haircare">Haircare</option>
+          <option value="makeup">Makeup</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
 
-    <div class="button-row">
-      <button onclick="loadProducts()">Load Live L'Oréal Products</button>
-      <button onclick="showMoreProducts()">Show More Products</button>
+      <div class="products-top-actions">
+        <button id="load-products-btn" class="secondary-btn" type="button">Load Live L’Oréal Products</button>
+        <button id="show-more-btn" class="secondary-btn" type="button">Show More Products</button>
+      </div>
+
+      <div id="product-status" class="status-text">Click “Load Live L’Oréal Products” to fetch products.</div>
+      <div id="product-grid" class="product-grid"></div>
+    </section>
+
+    <section class="selected-section">
+      <h2>Selected Products</h2>
+      <div id="selected-products-empty" class="empty-text">No products selected yet.</div>
+      <div id="selected-products-list" class="selected-products-list"></div>
+
+      <div class="selected-actions">
+        <button id="generate-routine-btn" class="primary-btn" type="button">Generate Routine</button>
+        <button id="clear-products-btn" class="secondary-btn" type="button">Clear Selected Products</button>
+      </div>
+    </section>
+
+    <main class="chat-container">
+      <div class="chat-header">
+        <div class="label assistant-label">L’Oréal Advisor</div>
+      </div>
+
+      <div id="chat-box" class="chat-box">
+        <div class="message assistant">
+          <div class="label assistant-label">L’Oréal Advisor</div>
+          <div class="bubble">
+            Hello! Load products, select products, generate a routine, and ask follow-up questions about your routine, skincare, haircare, or beauty products.
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Ask about your routine or selected products..."
+          aria-label="Ask about your routine"
+        />
+        <button id="send-btn" type="button">Send</button>
+      </div>
+    </main>
+
+    <div class="logo-wrap bottom-logo-wrap">
+      <img src="./images/loreal-logo.png" alt="L’Oréal Logo Bottom" class="logo bottom-logo" />
     </div>
 
-    <div id="productCount"></div>
+    <footer class="footer">
+      <p>© 2026 L’Oréal-inspired student project</p>
+    </footer>
   </div>
 
-  <!-- PRODUCTS -->
-  <div id="productContainer" class="product-grid"></div>
-
-  <!-- SELECTED -->
-  <div class="selected-box">
-    <h2>Selected Products</h2>
-    <div id="selectedProducts">No products selected yet.</div>
-
-    <button onclick="generateRoutine()">Generate Routine</button>
-    <button onclick="clearSelected()">Clear Selected Products</button>
-  </div>
-
-  <!-- CHAT -->
-  <div class="chatbox">
-    <div id="chatMessages"></div>
-
-    <input id="chatInput" placeholder="Ask about your routine...">
-    <button onclick="sendMessage()">Send</button>
-  </div>
-
-<script src="script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
