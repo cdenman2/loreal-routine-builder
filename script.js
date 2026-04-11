@@ -1,164 +1,64 @@
-Skip to content
-cdenman2
-loreal-routine-builder
-Repository navigation
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security and quality
-Insights
-Settings
-loreal-routine-builder
-/script.js
-Go to file
-t
-cdenman2
-cdenman2
-Update script.js
-a497754
- · 
-49 minutes ago
+const API = "https://loreal-worker.loreal-chatbot-nick.workers.dev";
 
-Code
+const grid = document.getElementById("product-grid");
+const status = document.getElementById("product-status");
+const loadBtn = document.getElementById("load-products-btn");
 
-Blame
-115 lines (89 loc) · 2.43 KB
-const API = "https://YOUR_WORKER_URL";
+const sendBtn = document.getElementById("send-btn");
+const input = document.getElementById("user-input");
+const chatBox = document.getElementById("chat-box");
 
-let allProducts = [];
-let selected = [];
-let visibleCount = 8;
+loadBtn.onclick = async () => {
+  status.textContent = "Loading...";
 
-// LOAD PRODUCTS
-async function loadProducts() {
-  const category = document.getElementById("category").value;
+  try {
+    const res = await fetch(API + "/products");
+    const data = await res.json();
 
-  const res = await fetch(`${API}/products?category=${category}`);
-  const data = await res.json();
+    grid.innerHTML = "";
 
-  allProducts = data;
-  visibleCount = 8;
+    data.products.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "product-card";
 
-  render();
-}
+      card.innerHTML = `
+        <div class="product-image-wrap">
+          <img src="${p.image}">
+        </div>
+        <div>${p.name}</div>
+        <div>${p.category}</div>
+      `;
 
-// SHOW MORE
-function showMore() {
-  visibleCount += 8;
-  render();
-}
+      grid.appendChild(card);
+    });
 
-// RENDER PRODUCTS
-function render() {
-  const grid = document.getElementById("products");
-  grid.innerHTML = "";
+    status.textContent = "Loaded " + data.products.length + " products";
 
-  const search = document.getElementById("search").value.toLowerCase();
-
-  const filtered = allProducts.filter(p =>
-    p.name.toLowerCase().includes(search)
-  );
-
-  filtered.slice(0, visibleCount).forEach(p => {
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <img src="${p.image}" />
-      <h4>${p.name}</h4>
-      <p>${p.category}</p>
-      <button onclick='selectProduct(${JSON.stringify(p)})'>
-        ${selected.find(x => x.id === p.id) ? "Unselect" : "Select"}
-      </button>
-    `;
-
-    grid.appendChild(div);
-  });
-
-  document.getElementById("count").innerText =
-    `Loaded ${filtered.length} products`;
-}
-
-// SELECT
-function selectProduct(p) {
-  const exists = selected.find(x => x.id === p.id);
-
-  if (exists) {
-    selected = selected.filter(x => x.id !== p.id);
-  } else {
-    selected.push(p);
+  } catch (e) {
+    status.textContent = "FAILED TO LOAD PRODUCTS";
   }
+};
 
-  updateSelected();
-  render();
-}
+sendBtn.onclick = async () => {
+  const msg = input.value.trim();
+  if (!msg) return;
 
-// UPDATE SELECTED
-function updateSelected() {
-  const box = document.getElementById("selectedList");
-
-  if (selected.length === 0) {
-    box.innerText = "None selected";
-    return;
-  }
-
-  box.innerText = selected.map(p => p.name).join(", ");
-}
-
-// CLEAR
-function clearSelected() {
-  selected = [];
-  updateSelected();
-  render();
-}
-
-// CHAT
-async function sendChat() {
-  const input = document.getElementById("chatInput");
-  const msg = input.value;
-
-  const res = await fetch(`${API}/chat`, {
-    method: "POST",
-    body: JSON.stringify({
-      message: msg,
-      history: []
-    })
-  });
-
-  const data = await res.json();
-
-  const chat = document.getElementById("chatBox");
-  chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
-  chat.innerHTML += `<p><b>Bot:</b> ${data.reply}</p>`;
-
+  chatBox.innerHTML += `<div><b>You:</b> ${msg}</div>`;
   input.value = "";
-}
 
-// ROUTINE
-function generateRoutine() {
-  alert("Routine generated based on selected products!");
-}
-Symbols
-Find definitions and references for functions and other symbols in this file by clicking a symbol below or in the code.
+  try {
+    const res = await fetch(API + "/chat", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({message: msg})
+    });
 
-Filter symbols
-r
-func
-loadProducts
-func
-showMore
-func
-render
-func
-selectProduct
-func
-updateSelected
-func
-clearSelected
-func
-sendChat
-func
-generateRoutine
+    const data = await res.json();
+
+    chatBox.innerHTML += `<div><b>AI:</b> ${data.reply}</div>`;
+  } catch {
+    chatBox.innerHTML += `<div><b>AI:</b> ERROR</div>`;
+  }
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+};
