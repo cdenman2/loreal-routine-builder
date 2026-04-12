@@ -215,17 +215,4 @@ categoryFilter.addEventListener("change", renderProducts);
 clearProductsBtn.addEventListener("click", () => {
   selectedProducts = [];
   updateSelectedProductsUI();
-  renderProducts();
-});
-
-generateRoutineBtn.addEventListener("click", generateRoutine);
-
-sendBtn.addEventListener("click", sendMessage);
-
-userInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    sendMessage();
-  }
-});
-
-updateSelectedProductsUI();
+ 
