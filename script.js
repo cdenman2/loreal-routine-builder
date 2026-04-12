@@ -30,7 +30,9 @@ const lorealFacts = [
   "Conditioner helps smooth the hair cuticle and improve softness after shampooing.",
   "Serums are lightweight formulas designed to target specific concerns such as dullness, dryness, or uneven-looking skin.",
   "Sunscreen helps protect skin from UV damage and is an important daytime step.",
-  "Mascara is usually one of the last steps in a basic makeup routine."
+  "Mascara is usually one of the last steps in a basic makeup routine.",
+  "Self-tanning products are usually applied to clean, dry skin for more even-looking color.",
+  "Micellar water is often used as a quick cleansing step before a full face wash."
 ];
 
 let factIndex = 0;
@@ -66,7 +68,9 @@ function renderProducts() {
 
   productGrid.innerHTML = "";
 
-  filtered.slice(0, visibleCount).forEach((product) => {
+  const visibleProducts = filtered.slice(0, visibleCount);
+
+  visibleProducts.forEach((product) => {
     const isSelected = selectedProducts.includes(product.name);
 
     const card = document.createElement("div");
@@ -99,8 +103,10 @@ function renderProducts() {
 
   if (filtered.length === 0) {
     productStatus.textContent = "No matching products found.";
+    showMoreBtn.style.display = "none";
   } else {
-    productStatus.textContent = `Loaded ${Math.min(filtered.length, visibleCount)} of ${filtered.length} products`;
+    productStatus.textContent = `Loaded ${visibleProducts.length} of ${filtered.length} products`;
+    showMoreBtn.style.display = visibleCount < filtered.length ? "inline-block" : "none";
   }
 }
 
@@ -204,19 +210,32 @@ function generateRoutine() {
 }
 
 loadProductsBtn.addEventListener("click", loadProducts);
+
 showMoreBtn.addEventListener("click", () => {
-  visibleCount += 3;
+  visibleCount += 6;
   renderProducts();
 });
-searchInput.addEventListener("input", renderProducts);
-categoryFilter.addEventListener("change", renderProducts);
+
+searchInput.addEventListener("input", () => {
+  visibleCount = 6;
+  renderProducts();
+});
+
+categoryFilter.addEventListener("change", () => {
+  visibleCount = 6;
+  renderProducts();
+});
+
 clearProductsBtn.addEventListener("click", () => {
   selectedProducts = [];
   updateSelectedProductsUI();
   renderProducts();
 });
+
 generateRoutineBtn.addEventListener("click", generateRoutine);
+
 sendBtn.addEventListener("click", sendMessage);
+
 userInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     sendMessage();
@@ -224,3 +243,4 @@ userInput.addEventListener("keydown", (event) => {
 });
 
 updateSelectedProductsUI();
+showMoreBtn.style.display = "none";
