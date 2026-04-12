@@ -7,8 +7,8 @@
 }
 
 :root {
-  --gold-bg: linear-gradient(135deg, #fff6c5, #ffe760, #ffd700, #cfa62a, #b8860b, #ffd700, #fff6c5);
-  --red-bg: linear-gradient(135deg, #ffb3b3, #ff5a5a, #d71920, #8b0000, #d71920, #ff5a5a, #ffb3b3);
+  --gold-bg: linear-gradient(135deg, #fff6c5 0%, #ffe45c 18%, #ffd700 35%, #c89d00 55%, #ffe45c 78%, #fff6c5 100%);
+  --red-bg: linear-gradient(135deg, #ffb3b3 0%, #ff5f5f 18%, #d71920 45%, #8b0000 70%, #ff5f5f 88%, #ffb3b3 100%);
   --white-bg: linear-gradient(135deg, #ffffff, #f5f5f5, #e6e6e6, #ffffff);
   --black: #000;
 }
@@ -42,30 +42,30 @@ body {
 }
 
 .top-logo-wrap {
-  width: 240px;
-  height: 90px;
+  width: 280px;
+  height: 108px;
   padding: 8px;
   margin: 0 auto 10px;
   background: var(--red-bg);
   border: 4px solid var(--black);
   border-radius: 16px;
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.45);
   overflow: hidden;
 }
 
 .bottom-logo-wrap {
-  width: 140px;
-  height: 70px;
+  width: 170px;
+  height: 85px;
   padding: 6px;
   margin: 18px auto 0;
   background: var(--red-bg);
   border: 4px solid var(--black);
   border-radius: 14px;
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.45);
   overflow: hidden;
 }
 
@@ -85,6 +85,9 @@ body {
   border: 4px solid var(--black);
   border-radius: 12px;
   font-size: 1rem;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
 }
 
 .title {
@@ -105,6 +108,9 @@ body {
   background: var(--gold-bg);
   border: 4px solid var(--black);
   border-radius: 12px;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
 }
 
 #fact-text {
@@ -128,14 +134,14 @@ body {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  padding: 12px 16px 16px;
+  padding: 10px 14px 14px;
   box-shadow:
-    inset 0 3px 6px rgba(255, 255, 255, 0.35),
-    inset 0 -4px 8px rgba(0, 0, 0, 0.45);
+    inset 0 3px 6px rgba(255,255,255,0.35),
+    inset 0 -4px 8px rgba(0,0,0,0.45);
 }
 
 .selected-section {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255,255,255,0.92);
   max-width: 640px;
   margin-left: auto;
   margin-right: auto;
@@ -152,15 +158,15 @@ body {
   margin-left: auto;
   margin-right: auto;
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.45);
 }
 
 /* TOOLBAR */
 .toolbar {
   display: flex;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -168,10 +174,10 @@ body {
 
 .products-top-actions {
   display: flex;
-  gap: 22px;
+  gap: 18px;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 8px 0 12px;
+  margin: 12px 0 10px;
 }
 
 #search-input,
@@ -188,7 +194,7 @@ body {
 
 #search-input {
   flex: 1.2;
-  min-width: 370px;
+  min-width: 385px;
 }
 
 #category-filter {
@@ -215,12 +221,12 @@ body {
 }
 
 .product-card {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255,255,255,0.96);
   border: 4px solid var(--black);
   border-radius: 12px;
   padding: 10px;
   text-align: center;
-  min-height: 262px;
+  min-height: 252px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -278,8 +284,8 @@ body {
   color: #000;
   background: var(--gold-bg);
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
 }
 
 /* BUTTONS */
@@ -295,8 +301,8 @@ body {
   color: #000;
   background: var(--gold-bg);
   box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.35),
-    inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
 }
 
 /* SELECTED */
@@ -371,11 +377,17 @@ body {
 
 .assistant-label {
   background: var(--gold-bg);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
 }
 
 .user-label {
   background: var(--red-bg);
   color: #fff;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.25),
+    inset 0 -3px 6px rgba(0,0,0,0.35);
 }
 
 .bubble {
@@ -421,8 +433,13 @@ body {
   }
 
   .top-logo-wrap {
-    width: 220px;
-    height: 82px;
+    width: 250px;
+    height: 96px;
+  }
+
+  .bottom-logo-wrap {
+    width: 150px;
+    height: 78px;
   }
 
   .title {
