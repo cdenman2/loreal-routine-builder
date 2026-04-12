@@ -36,6 +36,7 @@ const lorealFacts = [
 let factIndex = 0;
 
 function rotateFacts() {
+  if (!factText) return;
   factText.textContent = lorealFacts[factIndex];
   factIndex = (factIndex + 1) % lorealFacts.length;
 }
@@ -203,16 +204,23 @@ function generateRoutine() {
 }
 
 loadProductsBtn.addEventListener("click", loadProducts);
-
 showMoreBtn.addEventListener("click", () => {
   visibleCount += 3;
   renderProducts();
 });
-
 searchInput.addEventListener("input", renderProducts);
 categoryFilter.addEventListener("change", renderProducts);
-
 clearProductsBtn.addEventListener("click", () => {
   selectedProducts = [];
   updateSelectedProductsUI();
- 
+  renderProducts();
+});
+generateRoutineBtn.addEventListener("click", generateRoutine);
+sendBtn.addEventListener("click", sendMessage);
+userInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+});
+
+updateSelectedProductsUI();
