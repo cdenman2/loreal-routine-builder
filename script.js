@@ -24,7 +24,7 @@ const STORAGE_KEYS = {
 };
 
 let allProducts = [];
-let visibleCount = 6;
+let visibleCount = 4;
 let selectedProductIds = [];
 let history = [];
 
@@ -230,7 +230,7 @@ async function loadProducts() {
 
     allProducts = Array.isArray(data.products) ? data.products : [];
     saveProductCache();
-    visibleCount = 6;
+    visibleCount = 4;
     updateSelectedProductsUI();
     renderProducts();
   } catch {
@@ -354,17 +354,17 @@ function initializeApp() {
 loadProductsBtn.addEventListener("click", loadProducts);
 
 showMoreBtn.addEventListener("click", () => {
-  visibleCount += 6;
+  visibleCount += 4;
   renderProducts();
 });
 
 searchInput.addEventListener("input", () => {
-  visibleCount = 6;
+  visibleCount = 4;
   renderProducts();
 });
 
 categoryFilter.addEventListener("change", () => {
-  visibleCount = 6;
+  visibleCount = 4;
   renderProducts();
 });
 
