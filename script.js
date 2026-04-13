@@ -4,6 +4,7 @@ const productGrid = document.getElementById("product-grid");
 const productStatus = document.getElementById("product-status");
 const loadProductsBtn = document.getElementById("load-products-btn");
 const showMoreBtn = document.getElementById("show-more-btn");
+const showLessBtn = document.getElementById("show-less-btn");
 const searchInput = document.getElementById("search-input");
 const categoryFilter = document.getElementById("category-filter");
 
@@ -23,8 +24,10 @@ const STORAGE_KEYS = {
   productCache: "loreal_product_cache"
 };
 
+const INITIAL_VISIBLE_COUNT = 3;
+
 let allProducts = [];
-let visibleCount = 3;
+let visibleCount = INITIAL_VISIBLE_COUNT;
 let selectedProductIds = [];
 let history = [];
 
@@ -132,8 +135,9 @@ function filterProducts() {
   });
 }
 
-function updateShowMoreVisibility(totalFiltered) {
+function updateProductButtons(totalFiltered) {
   showMoreBtn.style.display = visibleCount < totalFiltered ? "inline-block" : "none";
+  showLessBtn.style.display = visibleCount > INITIAL_VISIBLE_COUNT && totalFiltered > INITIAL_VISIBLE_COUNT ? "inline-block" : "none";
 }
 
 function updateSelectedProductsUI() {
@@ -215,7 +219,7 @@ function renderProducts() {
     productStatus.textContent = `Loaded ${visibleProducts.length} of ${filtered.length} products`;
   }
 
-  updateShowMoreVisibility(filtered.length);
+  updateProductButtons(filtered.length);
 }
 
 async function loadProducts() {
@@ -241,7 +245,7 @@ async function loadProducts() {
 
     allProducts = Array.isArray(data.products) ? data.products : [];
     saveProductCache();
-    visibleCount = 3;
+    visibleCount = INITIAL_VISIBLE_COUNT;
     updateSelectedProductsUI();
     renderProducts();
   } catch {
@@ -356,27 +360,33 @@ function initializeApp() {
   updateSelectedProductsUI();
 
   if (allProducts.length > 0) {
-    visibleCount = 3;
+    visibleCount = INITIAL_VISIBLE_COUNT;
     renderProducts();
   } else {
     showMoreBtn.style.display = "none";
+    showLessBtn.style.display = "none";
   }
 }
 
 loadProductsBtn.addEventListener("click", loadProducts);
 
 showMoreBtn.addEventListener("click", () => {
-  visibleCount += 3;
+  visibleCount += INITIAL_VISIBLE_COUNT;
+  renderProducts();
+});
+
+showLessBtn.addEventListener("click", () => {
+  visibleCount = INITIAL_VISIBLE_COUNT;
   renderProducts();
 });
 
 searchInput.addEventListener("input", () => {
-  visibleCount = 3;
+  visibleCount = INITIAL_VISIBLE_COUNT;
   renderProducts();
 });
 
 categoryFilter.addEventListener("change", () => {
-  visibleCount = 3;
+  visibleCount = INITIAL_VISIBLE_COUNT;
   renderProducts();
 });
 
