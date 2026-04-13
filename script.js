@@ -24,7 +24,7 @@ const STORAGE_KEYS = {
 };
 
 let allProducts = [];
-let visibleCount = 4;
+let visibleCount = 6;
 let selectedProductIds = [];
 let history = [];
 
@@ -89,6 +89,11 @@ function loadProductCache() {
   }
 }
 
+function clearProductCache() {
+  localStorage.removeItem(STORAGE_KEYS.productCache);
+  allProducts = [];
+}
+
 function getSelectedProductNames() {
   return allProducts
     .filter((product) => selectedProductIds.includes(product.id))
@@ -103,7 +108,9 @@ function rotateFacts() {
 
 function startFactRotation() {
   rotateFacts();
-  if (factIntervalId) clearInterval(factIntervalId);
+  if (factIntervalId) {
+    clearInterval(factIntervalId);
+  }
   factIntervalId = setInterval(rotateFacts, 4000);
 }
 
@@ -213,12 +220,15 @@ function renderProducts() {
 async function loadProducts() {
   productStatus.textContent = "Loading products...";
 
+  clearProductCache();
+
   try {
-    const response = await fetch(`${API}/products`, {
+    const response = await fetch(`${API}/products?ts=${Date.now()}`, {
       method: "GET",
       headers: {
         "Accept": "application/json"
-      }
+      },
+      cache: "no-store"
     });
 
     const data = await response.json();
@@ -230,7 +240,7 @@ async function loadProducts() {
 
     allProducts = Array.isArray(data.products) ? data.products : [];
     saveProductCache();
-    visibleCount = 4;
+    visibleCount = 6;
     updateSelectedProductsUI();
     renderProducts();
   } catch {
@@ -345,6 +355,7 @@ function initializeApp() {
   updateSelectedProductsUI();
 
   if (allProducts.length > 0) {
+    visibleCount = 6;
     renderProducts();
   } else {
     showMoreBtn.style.display = "none";
@@ -354,17 +365,17 @@ function initializeApp() {
 loadProductsBtn.addEventListener("click", loadProducts);
 
 showMoreBtn.addEventListener("click", () => {
-  visibleCount += 4;
+  visibleCount += 6;
   renderProducts();
 });
 
 searchInput.addEventListener("input", () => {
-  visibleCount = 4;
+  visibleCount = 6;
   renderProducts();
 });
 
 categoryFilter.addEventListener("change", () => {
-  visibleCount = 4;
+  visibleCount = 6;
   renderProducts();
 });
 
