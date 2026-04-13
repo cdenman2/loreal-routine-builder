@@ -42,11 +42,14 @@
 
       <div class="products-top-actions">
         <button id="load-products-btn" class="secondary-btn" type="button">Load Live L’Oréal Products</button>
-        <button id="show-more-btn" class="secondary-btn" type="button">Show More</button>
-        <button id="show-less-btn" class="secondary-btn" type="button">Show Less</button>
       </div>
 
-      <div id="product-status" class="status-text">Click “Load Live L’Oréal Products” to fetch products.</div>
+      <div class="product-nav-row">
+        <button id="products-prev-btn" class="nav-arrow-btn" type="button" aria-label="Previous products">◀</button>
+        <div id="product-status" class="status-text">Click “Load Live L’Oréal Products” to fetch products.</div>
+        <button id="products-next-btn" class="nav-arrow-btn" type="button" aria-label="Next products">▶</button>
+      </div>
+
       <div id="product-grid" class="product-grid"></div>
     </section>
 
