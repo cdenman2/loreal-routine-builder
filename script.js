@@ -3,8 +3,8 @@ const API = "https://loreal-worker.loreal-chatbot-nick.workers.dev";
 const productGrid = document.getElementById("product-grid");
 const productStatus = document.getElementById("product-status");
 const loadProductsBtn = document.getElementById("load-products-btn");
-const showMoreBtn = document.getElementById("show-more-btn");
-const showLessBtn = document.getElementById("show-less-btn");
+const prevProductsBtn = document.getElementById("products-prev-btn");
+const nextProductsBtn = document.getElementById("products-next-btn");
 const searchInput = document.getElementById("search-input");
 const categoryFilter = document.getElementById("category-filter");
 
@@ -25,14 +25,14 @@ const STORAGE_KEYS = {
   productCache: "loreal_product_cache"
 };
 
-const INITIAL_VISIBLE_COUNT = 3;
+const PAGE_SIZE = 3;
 const DEFAULT_ASSISTANT_MESSAGE =
   "Hello! Load products, select products, generate a routine, and ask follow-up questions about your routine, skincare, haircare, makeup, or beauty products.";
 
 let allProducts = [];
-let visibleCount = INITIAL_VISIBLE_COUNT;
 let selectedProductIds = [];
 let history = [];
+let currentPage = 0;
 
 const lorealFacts = [
   "Healthy skincare routines usually follow this order: cleanser, treatment serum, moisturizer, and sunscreen during the day.",
@@ -138,12 +138,14 @@ function filterProducts() {
   });
 }
 
-function updateProductButtons(totalFiltered) {
-  showMoreBtn.style.display = visibleCount < totalFiltered ? "inline-block" : "none";
-  showLessBtn.style.display =
-    visibleCount > INITIAL_VISIBLE_COUNT && totalFiltered > INITIAL_VISIBLE_COUNT
-      ? "inline-block"
-      : "none";
+function getTotalPages(totalItems) {
+  return Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+}
+
+function updateArrowButtons(totalFiltered) {
+  const totalPages = getTotalPages(totalFiltered);
+  prevProductsBtn.disabled = currentPage <= 0;
+  nextProductsBtn.disabled = currentPage >= totalPages - 1 || totalFiltered === 0;
 }
 
 function updateSelectedProductsUI() {
@@ -211,7 +213,15 @@ function createProductCard(product) {
 
 function renderProducts() {
   const filtered = filterProducts();
-  const visibleProducts = filtered.slice(0, visibleCount);
+  const totalPages = getTotalPages(filtered.length);
+
+  if (currentPage > totalPages - 1) {
+    currentPage = Math.max(0, totalPages - 1);
+  }
+
+  const start = currentPage * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const visibleProducts = filtered.slice(start, end);
 
   productGrid.innerHTML = "";
 
@@ -222,10 +232,10 @@ function renderProducts() {
   if (filtered.length === 0) {
     productStatus.textContent = "No matching products found.";
   } else {
-    productStatus.textContent = `Loaded ${visibleProducts.length} of ${filtered.length} products`;
+    productStatus.textContent = `Showing ${start + 1}-${Math.min(end, filtered.length)} of ${filtered.length} products`;
   }
 
-  updateProductButtons(filtered.length);
+  updateArrowButtons(filtered.length);
 }
 
 async function loadProducts() {
@@ -251,7 +261,7 @@ async function loadProducts() {
 
     allProducts = Array.isArray(data.products) ? data.products : [];
     saveProductCache();
-    visibleCount = INITIAL_VISIBLE_COUNT;
+    currentPage = 0;
     updateSelectedProductsUI();
     renderProducts();
   } catch {
@@ -369,33 +379,40 @@ function initializeApp() {
   updateSelectedProductsUI();
 
   if (allProducts.length > 0) {
-    visibleCount = INITIAL_VISIBLE_COUNT;
+    currentPage = 0;
     renderProducts();
   } else {
-    showMoreBtn.style.display = "none";
-    showLessBtn.style.display = "none";
+    prevProductsBtn.disabled = true;
+    nextProductsBtn.disabled = true;
   }
 }
 
 loadProductsBtn.addEventListener("click", loadProducts);
 
-showMoreBtn.addEventListener("click", () => {
-  visibleCount += INITIAL_VISIBLE_COUNT;
-  renderProducts();
+prevProductsBtn.addEventListener("click", () => {
+  if (currentPage > 0) {
+    currentPage -= 1;
+    renderProducts();
+  }
 });
 
-showLessBtn.addEventListener("click", () => {
-  visibleCount = INITIAL_VISIBLE_COUNT;
-  renderProducts();
+nextProductsBtn.addEventListener("click", () => {
+  const filtered = filterProducts();
+  const totalPages = getTotalPages(filtered.length);
+
+  if (currentPage < totalPages - 1) {
+    currentPage += 1;
+    renderProducts();
+  }
 });
 
 searchInput.addEventListener("input", () => {
-  visibleCount = INITIAL_VISIBLE_COUNT;
+  currentPage = 0;
   renderProducts();
 });
 
 categoryFilter.addEventListener("change", () => {
-  visibleCount = INITIAL_VISIBLE_COUNT;
+  currentPage = 0;
   renderProducts();
 });
 
