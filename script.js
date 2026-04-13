@@ -24,7 +24,7 @@ const STORAGE_KEYS = {
 };
 
 let allProducts = [];
-let visibleCount = 6;
+let visibleCount = 3;
 let selectedProductIds = [];
 let history = [];
 
@@ -122,7 +122,8 @@ function filterProducts() {
     const matchesSearch =
       product.name.toLowerCase().includes(searchTerm) ||
       product.category.toLowerCase().includes(searchTerm) ||
-      product.description.toLowerCase().includes(searchTerm);
+      product.description.toLowerCase().includes(searchTerm) ||
+      (product.brand && product.brand.toLowerCase().includes(searchTerm));
 
     const matchesCategory =
       selectedCategory === "all" || product.category === selectedCategory;
@@ -240,7 +241,7 @@ async function loadProducts() {
 
     allProducts = Array.isArray(data.products) ? data.products : [];
     saveProductCache();
-    visibleCount = 6;
+    visibleCount = 3;
     updateSelectedProductsUI();
     renderProducts();
   } catch {
@@ -355,7 +356,7 @@ function initializeApp() {
   updateSelectedProductsUI();
 
   if (allProducts.length > 0) {
-    visibleCount = 6;
+    visibleCount = 3;
     renderProducts();
   } else {
     showMoreBtn.style.display = "none";
@@ -365,17 +366,17 @@ function initializeApp() {
 loadProductsBtn.addEventListener("click", loadProducts);
 
 showMoreBtn.addEventListener("click", () => {
-  visibleCount += 6;
+  visibleCount += 3;
   renderProducts();
 });
 
 searchInput.addEventListener("input", () => {
-  visibleCount = 6;
+  visibleCount = 3;
   renderProducts();
 });
 
 categoryFilter.addEventListener("change", () => {
-  visibleCount = 6;
+  visibleCount = 3;
   renderProducts();
 });
 
