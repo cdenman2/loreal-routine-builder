@@ -22,46 +22,44 @@
       </div>
     </header>
 
-    <div class="top-sections">
-      <section class="controls-section">
-        <div class="toolbar">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Search products..."
-            aria-label="Search products"
-          />
+    <section class="controls-section">
+      <div class="toolbar">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search products..."
+          aria-label="Search products"
+        />
 
-          <select id="category-filter" aria-label="Filter by category">
-            <option value="all">All Categories</option>
-            <option value="skincare">Skincare</option>
-            <option value="haircare">Haircare</option>
-            <option value="makeup">Makeup</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
+        <select id="category-filter" aria-label="Filter by category">
+          <option value="all">All Categories</option>
+          <option value="skincare">Skincare</option>
+          <option value="haircare">Haircare</option>
+          <option value="makeup">Makeup</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
 
-        <div class="products-top-actions">
-          <button id="load-products-btn" class="secondary-btn" type="button">Load Live L’Oréal Products</button>
-          <button id="show-more-btn" class="secondary-btn" type="button">Show More</button>
-          <button id="show-less-btn" class="secondary-btn" type="button">Show Less</button>
-        </div>
+      <div class="products-top-actions">
+        <button id="load-products-btn" class="secondary-btn" type="button">Load Live L’Oréal Products</button>
+        <button id="show-more-btn" class="secondary-btn" type="button">Show More</button>
+        <button id="show-less-btn" class="secondary-btn" type="button">Show Less</button>
+      </div>
 
-        <div id="product-status" class="status-text">Click “Load Live L’Oréal Products” to fetch products.</div>
-        <div id="product-grid" class="product-grid"></div>
-      </section>
+      <div id="product-status" class="status-text">Click “Load Live L’Oréal Products” to fetch products.</div>
+      <div id="product-grid" class="product-grid"></div>
+    </section>
 
-      <section class="selected-section">
-        <h2>Selected Products</h2>
-        <div id="selected-products-empty" class="empty-text">No products selected yet.</div>
-        <div id="selected-products-list" class="selected-products-list"></div>
+    <section class="selected-section">
+      <h2>Selected Products</h2>
+      <div id="selected-products-empty" class="empty-text">No products selected yet.</div>
+      <div id="selected-products-list" class="selected-products-list"></div>
 
-        <div class="selected-actions">
-          <button id="generate-routine-btn" class="primary-btn" type="button">Generate Routine</button>
-          <button id="clear-products-btn" class="secondary-btn" type="button">Clear Selected Products</button>
-        </div>
-      </section>
-    </div>
+      <div class="selected-actions">
+        <button id="generate-routine-btn" class="primary-btn" type="button">Generate Routine</button>
+        <button id="clear-products-btn" class="secondary-btn" type="button">Clear Selected Products</button>
+      </div>
+    </section>
 
     <main class="chat-container">
       <div id="chat-box" class="chat-box">
@@ -71,6 +69,10 @@
             Hello! Load products, select products, generate a routine, and ask follow-up questions about your routine, skincare, haircare, makeup, or beauty products.
           </div>
         </div>
+      </div>
+
+      <div class="chat-actions">
+        <button id="clear-chat-btn" class="secondary-btn" type="button">Clear Messages</button>
       </div>
 
       <div class="input-area">
