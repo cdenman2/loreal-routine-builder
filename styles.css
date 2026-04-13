@@ -172,6 +172,14 @@ body {
   margin: 12px 0 10px;
 }
 
+.product-nav-row {
+  display: grid;
+  grid-template-columns: 64px 1fr 64px;
+  gap: 12px;
+  align-items: center;
+  margin: 4px 0 12px;
+}
+
 #search-input,
 #category-filter,
 #user-input {
@@ -200,8 +208,35 @@ body {
 
 .status-text {
   text-align: center;
-  margin-bottom: 12px;
   font-size: 0.96rem;
+}
+
+.nav-arrow-btn {
+  min-height: 48px;
+  min-width: 48px;
+  border-radius: 12px;
+  border: 4px solid var(--black);
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: #000;
+  background: var(--gold-bg);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.nav-arrow-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    0 8px 14px rgba(0,0,0,0.18),
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
+}
+
+.nav-arrow-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .product-grid {
@@ -220,6 +255,13 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.2);
+  border-color: #d71920;
 }
 
 .product-card.selected {
@@ -245,6 +287,11 @@ body {
   height: 100%;
   object-fit: contain;
   display: block;
+  transition: transform 0.18s ease;
+}
+
+.product-card:hover .product-image-wrap img {
+  transform: scale(1.04);
 }
 
 .product-name {
@@ -310,10 +357,17 @@ body {
   box-shadow:
     inset 0 2px 4px rgba(255,255,255,0.35),
     inset 0 -3px 6px rgba(0,0,0,0.25);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-#show-less-btn {
-  display: none;
+.primary-btn:hover,
+.secondary-btn:hover,
+#send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 14px rgba(0,0,0,0.18),
+    inset 0 2px 4px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
 }
 
 .selected-section h2 {
@@ -439,6 +493,10 @@ body {
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .product-nav-row {
+    grid-template-columns: 52px 1fr 52px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -493,5 +551,24 @@ body {
   .chat-container,
   .selected-section {
     max-width: 100%;
+  }
+
+  .product-nav-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "status status"
+      "prev next";
+  }
+
+  .status-text {
+    grid-area: status;
+  }
+
+  #products-prev-btn {
+    grid-area: prev;
+  }
+
+  #products-next-btn {
+    grid-area: next;
   }
 }
