@@ -14,6 +14,7 @@ const generateRoutineBtn = document.getElementById("generate-routine-btn");
 const clearProductsBtn = document.getElementById("clear-products-btn");
 
 const chatBox = document.getElementById("chat-box");
+const clearChatBtn = document.getElementById("clear-chat-btn");
 const userInput = document.getElementById("user-input");
 const sendBtn = document.getElementById("send-btn");
 const factText = document.getElementById("fact-text");
@@ -25,6 +26,8 @@ const STORAGE_KEYS = {
 };
 
 const INITIAL_VISIBLE_COUNT = 3;
+const DEFAULT_ASSISTANT_MESSAGE =
+  "Hello! Load products, select products, generate a routine, and ask follow-up questions about your routine, skincare, haircare, makeup, or beauty products.";
 
 let allProducts = [];
 let visibleCount = INITIAL_VISIBLE_COUNT;
@@ -137,7 +140,10 @@ function filterProducts() {
 
 function updateProductButtons(totalFiltered) {
   showMoreBtn.style.display = visibleCount < totalFiltered ? "inline-block" : "none";
-  showLessBtn.style.display = visibleCount > INITIAL_VISIBLE_COUNT && totalFiltered > INITIAL_VISIBLE_COUNT ? "inline-block" : "none";
+  showLessBtn.style.display =
+    visibleCount > INITIAL_VISIBLE_COUNT && totalFiltered > INITIAL_VISIBLE_COUNT
+      ? "inline-block"
+      : "none";
 }
 
 function updateSelectedProductsUI() {
@@ -283,17 +289,20 @@ function rebuildChatFromHistory() {
   chatBox.innerHTML = "";
 
   if (history.length === 0) {
-    addChatMessage(
-      "assistant",
-      "Hello! Load products, select products, generate a routine, and ask follow-up questions about your routine, skincare, haircare, makeup, or beauty products.",
-      true
-    );
+    addChatMessage("assistant", DEFAULT_ASSISTANT_MESSAGE, true);
     return;
   }
 
   history.forEach((item) => {
     addChatMessage(item.role === "assistant" ? "assistant" : "user", item.content, false);
   });
+}
+
+function clearChatMessages() {
+  history = [];
+  saveChatHistory();
+  chatBox.innerHTML = "";
+  addChatMessage("assistant", DEFAULT_ASSISTANT_MESSAGE, true);
 }
 
 async function sendMessage() {
@@ -392,6 +401,7 @@ categoryFilter.addEventListener("change", () => {
 
 clearProductsBtn.addEventListener("click", clearSelectedProducts);
 generateRoutineBtn.addEventListener("click", generateRoutine);
+clearChatBtn.addEventListener("click", clearChatMessages);
 sendBtn.addEventListener("click", sendMessage);
 
 userInput.addEventListener("keydown", (event) => {
