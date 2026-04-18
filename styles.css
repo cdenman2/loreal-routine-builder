@@ -153,6 +153,7 @@ body {
   box-shadow:
     inset 0 2px 4px rgba(255,255,255,0.35),
     inset 0 -3px 6px rgba(0,0,0,0.45);
+  position: relative;
 }
 
 .toolbar {
@@ -405,6 +406,18 @@ body {
   flex-wrap: wrap;
 }
 
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.chat-header-title {
+  font-size: 1rem;
+}
+
 .chat-box {
   min-height: 180px;
   max-height: 280px;
@@ -470,6 +483,13 @@ body {
   text-align: left;
   font-size: 0.88rem;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.bubble a {
+  color: blue;
+  text-decoration: underline;
+  word-break: break-word;
 }
 
 .input-area {
@@ -487,6 +507,25 @@ body {
   text-align: center;
   margin-top: 10px;
   font-size: 0.88rem;
+}
+
+/* EXPAND CHAT */
+.chat-container.expanded {
+  position: fixed;
+  top: 3%;
+  left: 3%;
+  width: 94%;
+  max-width: none;
+  height: 92vh;
+  z-index: 9999;
+  margin: 0;
+  padding: 14px;
+}
+
+.chat-container.expanded .chat-box {
+  min-height: 0;
+  max-height: none;
+  height: calc(92vh - 170px);
 }
 
 @media (max-width: 900px) {
@@ -522,7 +561,8 @@ body {
   .toolbar,
   .input-area,
   .selected-actions,
-  .products-top-actions {
+  .products-top-actions,
+  .chat-header {
     flex-direction: column;
     align-items: stretch;
   }
@@ -570,5 +610,16 @@ body {
 
   #products-next-btn {
     grid-area: next;
+  }
+
+  .chat-container.expanded {
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 94vh;
+  }
+
+  .chat-container.expanded .chat-box {
+    height: calc(94vh - 220px);
   }
 }
