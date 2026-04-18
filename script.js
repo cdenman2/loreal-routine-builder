@@ -144,8 +144,14 @@ function getTotalPages(totalItems) {
 
 function updateArrowButtons(totalFiltered) {
   const totalPages = getTotalPages(totalFiltered);
-  prevProductsBtn.disabled = currentPage <= 0;
-  nextProductsBtn.disabled = currentPage >= totalPages - 1 || totalFiltered === 0;
+
+  if (prevProductsBtn) {
+    prevProductsBtn.disabled = currentPage <= 0;
+  }
+
+  if (nextProductsBtn) {
+    nextProductsBtn.disabled = currentPage >= totalPages - 1 || totalFiltered === 0;
+  }
 }
 
 function updateSelectedProductsUI() {
@@ -247,7 +253,7 @@ async function loadProducts() {
     const response = await fetch(`${API}/products?ts=${Date.now()}`, {
       method: "GET",
       headers: {
-        "Accept": "application/json"
+        Accept: "application/json"
       },
       cache: "no-store"
     });
@@ -269,7 +275,24 @@ async function loadProducts() {
   }
 }
 
-function addChatMessage(role, text, save = true) {
+function formatMessageWithLinks(text) {
+  if (!text) return "";
+
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const linked = escaped.replace(
+    /(https?:\/\/[^\s<]+)/g,
+    (url) =>
+      `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">${url}</a>`
+  );
+
+  return linked.replace(/\n/g, "<br>");
+}
+
+function addChatMessage(role, text, save = true, htmlContent = null) {
   const wrapper = document.createElement("div");
   wrapper.className = `message ${role}`;
 
@@ -279,7 +302,14 @@ function addChatMessage(role, text, save = true) {
 
   const bubble = document.createElement("div");
   bubble.className = "bubble";
-  bubble.textContent = text;
+
+  if (role === "assistant" && htmlContent) {
+    bubble.innerHTML = htmlContent;
+  } else if (role === "assistant") {
+    bubble.innerHTML = formatMessageWithLinks(text);
+  } else {
+    bubble.textContent = text;
+  }
 
   wrapper.appendChild(label);
   wrapper.appendChild(bubble);
@@ -289,7 +319,8 @@ function addChatMessage(role, text, save = true) {
   if (save) {
     history.push({
       role,
-      content: text
+      content: text,
+      html: role === "assistant" ? htmlContent : null
     });
     saveChatHistory();
   }
@@ -299,12 +330,17 @@ function rebuildChatFromHistory() {
   chatBox.innerHTML = "";
 
   if (history.length === 0) {
-    addChatMessage("assistant", DEFAULT_ASSISTANT_MESSAGE, true);
+    addChatMessage("assistant", DEFAULT_ASSISTANT_MESSAGE, true, null);
     return;
   }
 
   history.forEach((item) => {
-    addChatMessage(item.role === "assistant" ? "assistant" : "user", item.content, false);
+    addChatMessage(
+      item.role === "assistant" ? "assistant" : "user",
+      item.content,
+      false,
+      item.html || null
+    );
   });
 }
 
@@ -312,14 +348,14 @@ function clearChatMessages() {
   history = [];
   saveChatHistory();
   chatBox.innerHTML = "";
-  addChatMessage("assistant", DEFAULT_ASSISTANT_MESSAGE, true);
+  addChatMessage("assistant", DEFAULT_ASSISTANT_MESSAGE, true, null);
 }
 
 async function sendMessage() {
   const message = userInput.value.trim();
   if (!message) return;
 
-  addChatMessage("user", message, true);
+  addChatMessage("user", message, true, null);
   userInput.value = "";
 
   const selectedNames = getSelectedProductNames();
@@ -329,7 +365,7 @@ async function sendMessage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        Accept: "application/json"
       },
       body: JSON.stringify({
         message,
@@ -343,10 +379,11 @@ async function sendMessage() {
 
     const data = await response.json();
     const reply = data.reply || "I could not generate a response.";
+    const replyHtml = data.replyHtml || null;
 
-    addChatMessage("assistant", reply, true);
+    addChatMessage("assistant", reply, true, replyHtml);
   } catch {
-    addChatMessage("assistant", "There was an error sending your message.", true);
+    addChatMessage("assistant", "There was an error sending your message.", true, null);
   }
 }
 
@@ -354,7 +391,12 @@ function generateRoutine() {
   const selectedNames = getSelectedProductNames();
 
   if (selectedNames.length === 0) {
-    addChatMessage("assistant", "Please select at least one product before generating a routine.", true);
+    addChatMessage(
+      "assistant",
+      "Please select at least one product before generating a routine.",
+      true,
+      null
+    );
     return;
   }
 
@@ -382,29 +424,33 @@ function initializeApp() {
     currentPage = 0;
     renderProducts();
   } else {
-    prevProductsBtn.disabled = true;
-    nextProductsBtn.disabled = true;
+    if (prevProductsBtn) prevProductsBtn.disabled = true;
+    if (nextProductsBtn) nextProductsBtn.disabled = true;
   }
 }
 
 loadProductsBtn.addEventListener("click", loadProducts);
 
-prevProductsBtn.addEventListener("click", () => {
-  if (currentPage > 0) {
-    currentPage -= 1;
-    renderProducts();
-  }
-});
+if (prevProductsBtn) {
+  prevProductsBtn.addEventListener("click", () => {
+    if (currentPage > 0) {
+      currentPage -= 1;
+      renderProducts();
+    }
+  });
+}
 
-nextProductsBtn.addEventListener("click", () => {
-  const filtered = filterProducts();
-  const totalPages = getTotalPages(filtered.length);
+if (nextProductsBtn) {
+  nextProductsBtn.addEventListener("click", () => {
+    const filtered = filterProducts();
+    const totalPages = getTotalPages(filtered.length);
 
-  if (currentPage < totalPages - 1) {
-    currentPage += 1;
-    renderProducts();
-  }
-});
+    if (currentPage < totalPages - 1) {
+      currentPage += 1;
+      renderProducts();
+    }
+  });
+}
 
 searchInput.addEventListener("input", () => {
   currentPage = 0;
@@ -418,7 +464,11 @@ categoryFilter.addEventListener("change", () => {
 
 clearProductsBtn.addEventListener("click", clearSelectedProducts);
 generateRoutineBtn.addEventListener("click", generateRoutine);
-clearChatBtn.addEventListener("click", clearChatMessages);
+
+if (clearChatBtn) {
+  clearChatBtn.addEventListener("click", clearChatMessages);
+}
+
 sendBtn.addEventListener("click", sendMessage);
 
 userInput.addEventListener("keydown", (event) => {
