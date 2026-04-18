@@ -572,36 +572,3 @@ body {
     grid-area: next;
   }
 }
-/* EXPAND CHAT FEATURE */
-
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-#expand-chat-btn {
-  cursor: pointer;
-  border: 3px solid black;
-  background: gold;
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-.chat-container.expanded {
-  position: fixed;
-  top: 5%;
-  left: 5%;
-  width: 90%;
-  height: 85%;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-}
-
-.chat-container.expanded .chat-box {
-  flex: 1;
-  max-height: none;
-}
